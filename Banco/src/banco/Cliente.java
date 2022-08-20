@@ -133,8 +133,6 @@ public class Cliente extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-        System.out.println(this.txtApellido.getText());
-
         this.mainFrame.AgregarNuevoCliente(this.txtNombre.getText(),
                 this.txtApellido.getText(),
                 this.txtCUI.getText()
