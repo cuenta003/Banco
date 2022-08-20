@@ -21,9 +21,9 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
-        // No funciona con vector de objeto
-        _clientes = new banco.DatosCliente[4];
-        // Funciona con un array multidimencional 0,1,2,3,4 (cinco registros) y 0,1,2 (tres columnas [cui,nombre,apellido]) 
+        // Como un vector de array.
+        _clientes = new banco.DatosCliente[5];
+        // Como un array multidimencional 0,1,2,3,4 (cinco registros) y 0,1,2 (tres columnas [cui,nombre,apellido]) 
         aclientes = new String[5][3];
     }
 
@@ -100,12 +100,27 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu3ActionPerformed
         // TODO add your handling code here:
-        // Visualiza informacion de Clientes
+        
+        // Visualiza informacion de Clientes Array Multidimencional
         for(int x=0; x<=4; x++){
             for(int y=0; y<=2; y++){
                 System.out.print(aclientes[x][y] + "; "); //imprime tres columnas
             }
             System.out.println(""); // salto de linea
+        }
+        
+        //Visualiza Vector Array
+        for(int x=0; x<=4; x++)
+        {
+            if( _clientes[x] != null ){
+                System.out.println( _clientes[x].CUI + "; " +
+                        _clientes[x].Nombre + "; " +
+                        _clientes[x].Apellido );
+            }
+            else
+            {
+                System.out.println("nulo");
+            }
         }
     }//GEN-LAST:event_btnMenu3ActionPerformed
 
@@ -118,7 +133,7 @@ public class Menu extends javax.swing.JFrame {
         System.out.println(aclientes.length);
         System.out.println("------------- Contador Actual");
         System.out.println(iContadorCliente);
-        System.out.println("------------- Asigna");
+        System.out.println("------------- Asigna Array Multi");
         aclientes[iContadorCliente][0] = CUI;
         aclientes[iContadorCliente][1] = Nombre;
         aclientes[iContadorCliente][2] = Apellido;
@@ -126,12 +141,9 @@ public class Menu extends javax.swing.JFrame {
         System.out.println(aclientes[iContadorCliente][0]);
         System.out.println(aclientes[iContadorCliente][1]);
         System.out.println(aclientes[iContadorCliente][2]);
-        
+        System.out.println("------------- Asigna Vector Array");
+        _clientes[iContadorCliente] = new DatosCliente(CUI, Nombre, Apellido);
         iContadorCliente++;
-        //System.out.println(_clientes[0].Apellido);
-//        _clientes[iContadorCliente].Apellido = Apellido;
-//        _clientes[iContadorCliente].Nombre = Nombre;
-//        _clientes[iContadorCliente].CUI = CUI;
     }
     
     /**
