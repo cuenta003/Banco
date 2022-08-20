@@ -12,7 +12,8 @@ import sun.security.util.Debug;
  */
 public class Menu extends javax.swing.JFrame {
 
-    public banco.DatosCliente[] _clientes;
+    private banco.DatosCliente[] _clientes;
+    private String[][] aclientes;
     public int iContadorCliente = 0;
 
     /**
@@ -20,7 +21,10 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        // No funciona con vector de objeto
         _clientes = new banco.DatosCliente[4];
+        // Funciona con un array multidimencional 0,1,2,3,4 (cinco registros) y 0,1,2 (tres columnas [cui,nombre,apellido]) 
+        aclientes = new String[5][3];
     }
 
     /**
@@ -89,8 +93,7 @@ public class Menu extends javax.swing.JFrame {
             
             banco.Cliente creaCliente = new banco.Cliente(this, iContadorCliente);
             creaCliente.setAlwaysOnTop(true);
-            creaCliente.setVisible(true);            
-            iContadorCliente++;
+            creaCliente.setVisible(true);
         }
         //this.setVisible(false);
     }//GEN-LAST:event_btnMenu1ActionPerformed
@@ -98,16 +101,34 @@ public class Menu extends javax.swing.JFrame {
     private void btnMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu3ActionPerformed
         // TODO add your handling code here:
         // Visualiza informacion de Clientes
-        for(int i=0; i<=4; i++){
-            System.out.println( _clientes[i].CUI);
+        for(int x=0; x<=4; x++){
+            for(int y=0; y<=2; y++){
+                System.out.print(aclientes[x][y] + "; "); //imprime tres columnas
+            }
+            System.out.println(""); // salto de linea
         }
     }//GEN-LAST:event_btnMenu3ActionPerformed
 
     public void AgregarNuevoCliente( String Nombre, String Apellido, String CUI )
     {
-        System.out.println(Nombre);
-        System.out.println(Apellido);
-        System.out.println(CUI);
+        System.out.println("--- Nombre    " + Nombre);
+        System.out.println("--- Apellidos " + Apellido);
+        System.out.println("--- CUI       " + CUI);
+        System.out.println("------------- Dimension aclientes[][]");
+        System.out.println(aclientes.length);
+        System.out.println("------------- Contador Actual");
+        System.out.println(iContadorCliente);
+        System.out.println("------------- Asigna");
+        aclientes[iContadorCliente][0] = CUI;
+        aclientes[iContadorCliente][1] = Nombre;
+        aclientes[iContadorCliente][2] = Apellido;
+        System.out.println("------------- Despliga");        
+        System.out.println(aclientes[iContadorCliente][0]);
+        System.out.println(aclientes[iContadorCliente][1]);
+        System.out.println(aclientes[iContadorCliente][2]);
+        
+        iContadorCliente++;
+        //System.out.println(_clientes[0].Apellido);
 //        _clientes[iContadorCliente].Apellido = Apellido;
 //        _clientes[iContadorCliente].Nombre = Nombre;
 //        _clientes[iContadorCliente].CUI = CUI;
