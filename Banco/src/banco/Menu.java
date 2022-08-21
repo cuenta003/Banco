@@ -124,26 +124,45 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnMenu3ActionPerformed
 
-    public void AgregarNuevoCliente( String Nombre, String Apellido, String CUI )
+    public boolean AgregarNuevoCliente( String Nombre, String Apellido, String CUI )
     {
-        System.out.println("--- Nombre    " + Nombre);
-        System.out.println("--- Apellidos " + Apellido);
-        System.out.println("--- CUI       " + CUI);
-        System.out.println("------------- Dimension aclientes[][]");
-        System.out.println(aclientes.length);
-        System.out.println("------------- Contador Actual");
-        System.out.println(iContadorCliente);
-        System.out.println("------------- Asigna Array Multi");
-        aclientes[iContadorCliente][0] = CUI;
-        aclientes[iContadorCliente][1] = Nombre;
-        aclientes[iContadorCliente][2] = Apellido;
-        System.out.println("------------- Despliga");        
-        System.out.println(aclientes[iContadorCliente][0]);
-        System.out.println(aclientes[iContadorCliente][1]);
-        System.out.println(aclientes[iContadorCliente][2]);
-        System.out.println("------------- Asigna Vector Array");
-        _clientes[iContadorCliente] = new DatosCliente(CUI, Nombre, Apellido);
-        iContadorCliente++;
+        boolean existe = false;
+//        System.out.println("--- Nombre    " + Nombre);
+//        System.out.println("--- Apellidos " + Apellido);
+//        System.out.println("--- CUI       " + CUI);
+//        System.out.println("------------- Dimension aclientes[][]");
+//        System.out.println(aclientes.length);
+//        System.out.println("------------- Contador Actual");
+//        System.out.println(iContadorCliente);
+//        System.out.println("------------- Asigna Array Multi");
+//        aclientes[iContadorCliente][0] = CUI;
+//        aclientes[iContadorCliente][1] = Nombre;
+//        aclientes[iContadorCliente][2] = Apellido;
+//        System.out.println("------------- Despliga");        
+//        System.out.println(aclientes[iContadorCliente][0]);
+//        System.out.println(aclientes[iContadorCliente][1]);
+//        System.out.println(aclientes[iContadorCliente][2]);
+//        System.out.println("------------- Asigna Vector Array");
+        
+        //valida que no hayan duplicados
+        for(int x=0; x<=4; x++)
+        {
+            if( _clientes[x] != null )
+            {
+                if( CUI.equals(_clientes[x].CUI) )
+                {
+                    existe = true;
+                }
+            }
+        }
+        
+        if(!existe)
+        {
+            _clientes[iContadorCliente] = new DatosCliente(CUI, Nombre, Apellido);
+            iContadorCliente++;
+        }
+                
+        return existe;
     }
     
     /**

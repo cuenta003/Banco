@@ -4,6 +4,8 @@
  */
 package banco;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author adriangarcia
@@ -133,12 +135,19 @@ public class Cliente extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-        this.mainFrame.AgregarNuevoCliente(this.txtNombre.getText(),
+        boolean existe = this.mainFrame.AgregarNuevoCliente(this.txtNombre.getText(),
                 this.txtApellido.getText(),
                 this.txtCUI.getText()
         );
         
-        this.dispose();
+        if(existe)
+        {
+            JOptionPane.showMessageDialog(null, "El cliente ya existe","Error", JOptionPane.ERROR_MESSAGE);            
+        }
+        else
+        {
+            this.dispose();
+        }
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
