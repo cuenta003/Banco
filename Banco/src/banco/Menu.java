@@ -4,6 +4,7 @@
  */
 package banco;
 
+import javax.swing.JOptionPane;
 import sun.security.util.Debug;
 
 /**
@@ -13,8 +14,9 @@ import sun.security.util.Debug;
 public class Menu extends javax.swing.JFrame {
 
     private banco.DatosCliente[] _clientes;
-    private String[][] aclientes;
+    //private String[][] aclientes;
     public int iContadorCliente = 0;
+    public int iCuenta = 1;
 
     /**
      * Creates new form Menu
@@ -24,7 +26,7 @@ public class Menu extends javax.swing.JFrame {
         // Como un vector de array.
         _clientes = new banco.DatosCliente[5];
         // Como un array multidimencional 0,1,2,3,4 (cinco registros) y 0,1,2 (tres columnas [cui,nombre,apellido]) 
-        aclientes = new String[5][3];
+        //aclientes = new String[5][3];
     }
 
     /**
@@ -36,21 +38,26 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnMenu1 = new javax.swing.JButton();
-        btnMenu2 = new javax.swing.JButton();
+        btnCrearCliente = new javax.swing.JButton();
+        btnCrearCuenta = new javax.swing.JButton();
         btnMenu3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu");
 
-        btnMenu1.setText("Registrar Clientes");
-        btnMenu1.addActionListener(new java.awt.event.ActionListener() {
+        btnCrearCliente.setText("Registrar Clientes");
+        btnCrearCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMenu1ActionPerformed(evt);
+                btnCrearClienteActionPerformed(evt);
             }
         });
 
-        btnMenu2.setText("Crear Cuenta");
+        btnCrearCuenta.setText("Crear Cuenta");
+        btnCrearCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearCuentaActionPerformed(evt);
+            }
+        });
 
         btnMenu3.setText("Visualizar Info Clientes");
         btnMenu3.addActionListener(new java.awt.event.ActionListener() {
@@ -67,17 +74,17 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(131, 131, 131)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnMenu3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMenu2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCrearCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCrearCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(108, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addComponent(btnMenu1)
+                .addComponent(btnCrearCliente)
                 .addGap(18, 18, 18)
-                .addComponent(btnMenu2)
+                .addComponent(btnCrearCuenta)
                 .addGap(18, 18, 18)
                 .addComponent(btnMenu3)
                 .addContainerGap(145, Short.MAX_VALUE))
@@ -86,9 +93,11 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu1ActionPerformed
+    private void btnCrearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearClienteActionPerformed
         // TODO add your handling code here:
         if (iContadorCliente >= 5) {
+            JOptionPane.showMessageDialog(null, "No es posible crear mas clientes","Advertencia", JOptionPane.INFORMATION_MESSAGE);            
+        
         } else {
             
             banco.Cliente creaCliente = new banco.Cliente(this, iContadorCliente);
@@ -96,18 +105,18 @@ public class Menu extends javax.swing.JFrame {
             creaCliente.setVisible(true);
         }
         //this.setVisible(false);
-    }//GEN-LAST:event_btnMenu1ActionPerformed
+    }//GEN-LAST:event_btnCrearClienteActionPerformed
 
     private void btnMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu3ActionPerformed
         // TODO add your handling code here:
         
         // Visualiza informacion de Clientes Array Multidimencional
-        for(int x=0; x<=4; x++){
-            for(int y=0; y<=2; y++){
-                System.out.print(aclientes[x][y] + "; "); //imprime tres columnas
-            }
-            System.out.println(""); // salto de linea
-        }
+//        for(int x=0; x<=4; x++){
+//            for(int y=0; y<=2; y++){
+//                System.out.print(aclientes[x][y] + "; "); //imprime tres columnas
+//            }
+//            System.out.println(""); // salto de linea
+//        }
         
         //Visualiza Vector Array
         for(int x=0; x<=4; x++)
@@ -123,6 +132,13 @@ public class Menu extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnMenu3ActionPerformed
+
+    private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
+        // TODO add your handling code here:
+        banco.Cuenta crearCuenta = new banco.Cuenta();
+        crearCuenta.setAlwaysOnTop(true);
+        crearCuenta.setVisible(true);
+    }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
     public boolean AgregarNuevoCliente( String Nombre, String Apellido, String CUI )
     {
@@ -201,8 +217,8 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnMenu1;
-    private javax.swing.JButton btnMenu2;
+    private javax.swing.JButton btnCrearCliente;
+    private javax.swing.JButton btnCrearCuenta;
     private javax.swing.JButton btnMenu3;
     // End of variables declaration//GEN-END:variables
 }

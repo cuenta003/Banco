@@ -142,10 +142,11 @@ public class Cliente extends javax.swing.JFrame {
         
         if(existe)
         {
-            JOptionPane.showMessageDialog(null, "El cliente ya existe","Error", JOptionPane.ERROR_MESSAGE);            
+            JOptionPane.showMessageDialog(null, "No se pueden crear clientes con CUI duplicados. El CUI ingresado ya existe em el sistema.","Advertencia", JOptionPane.INFORMATION_MESSAGE);            
         }
         else
         {
+            JOptionPane.showMessageDialog(null, "Cliente creado exitosamente","Advertencia", JOptionPane.INFORMATION_MESSAGE);    
             this.dispose();
         }
     }//GEN-LAST:event_btnCrearActionPerformed

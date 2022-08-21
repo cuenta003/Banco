@@ -12,6 +12,15 @@ public class DatosCuenta {
     
     public String NumeroCuenta;
     public String Tipo;
-    public int Id;    
+    public String CUI;
+    public double Saldo = 0;
+    public int Id;
     
+    DatosCuenta( String numerocuenta, String tipo, String Cui, int id)
+    {
+        this.NumeroCuenta = numerocuenta;
+        this.Tipo = tipo;
+        this.CUI = Cui;
+        this.Id = id;
+    }
 }
