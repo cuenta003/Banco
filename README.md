@@ -40,3 +40,4 @@ La asignacion se puede realizar de la siguiente forma.
  _clientes[1] = new DatosCliente(cui1,nombre1,apellido1);
  _clientes[n] = new DatosCliente(cuin,nombren,apellidon);
  
+ 
