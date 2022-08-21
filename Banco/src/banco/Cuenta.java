@@ -12,21 +12,19 @@ public class Cuenta extends javax.swing.JFrame {
 
     private banco.Menu mainFrame;
     private banco.DatosCliente[] _clientes;
-    
+
     /**
      * Creates new form Cuenta
      */
     public Cuenta() {
         initComponents();
     }
-    
-    public Cuenta( banco.Menu mainframe, banco.DatosCliente[] clientes ) {
+
+    public Cuenta(banco.Menu mainframe, banco.DatosCliente[] clientes) {
         initComponents();
         this.mainFrame = mainframe;
         this._clientes = clientes;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -137,15 +135,16 @@ public class Cuenta extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        
-        for(int i = 0; i < _clientes.length; i++)
-        {
-            if( _clientes[i] != null)
-            {
-                 this.cmbClientes.addItem( _clientes[i].CUI + " " + _clientes[i].Nombre );
-            }           
+
+        for (int i = 0; i < _clientes.length; i++) {
+            if (_clientes[i] != null) {
+                this.cmbClientes.addItem(_clientes[i].CUI + " - "
+                        + _clientes[i].Nombre
+                        + _clientes[i].Apellido
+                );
+            }
         }
-        
+
     }//GEN-LAST:event_formWindowActivated
 
     /**
