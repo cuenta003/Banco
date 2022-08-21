@@ -11,6 +11,7 @@ package banco;
 public class Cuenta extends javax.swing.JFrame {
 
     private banco.Menu mainFrame;
+    private banco.DatosCliente[] _clientes;
     
     /**
      * Creates new form Cuenta
@@ -19,10 +20,12 @@ public class Cuenta extends javax.swing.JFrame {
         initComponents();
     }
     
-    public Cuenta( banco.Menu mainframe ) {
+    public Cuenta( banco.Menu mainframe, banco.DatosCliente[] clientes ) {
         initComponents();
         this.mainFrame = mainframe;
+        this._clientes = clientes;
     }
+    
     
 
     /**
@@ -45,6 +48,11 @@ public class Cuenta extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Crear Cuenta");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel2.setText("No. Cuenta");
 
@@ -123,9 +131,22 @@ public class Cuenta extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-        
+        mainFrame.AgregarNuevaCuenta();
         this.dispose();
     }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        
+        for(int i = 0; i < _clientes.length; i++)
+        {
+            if( _clientes[i] != null)
+            {
+                 this.cmbClientes.addItem( _clientes[i].CUI + " " + _clientes[i].Nombre );
+            }           
+        }
+        
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments

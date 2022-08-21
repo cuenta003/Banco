@@ -14,9 +14,20 @@ import sun.security.util.Debug;
 public class Menu extends javax.swing.JFrame {
 
     private banco.DatosCliente[] _clientes;
+    private banco.DatosCuenta[] _cuentas;
     //private String[][] aclientes;
-    public int iContadorCliente = 0;
-    public int iCuenta = 1;
+    
+    //Contador de Clientes
+    public int iContadorCliente = 1;
+    
+    //Identificador Unico para Cuentas Bancarias
+    public int iCuentaBancoId = 1;
+    
+    //numero maximo clientes
+    private final int iMaxClientes = 5;
+    
+    //numero maximo cuentas por cliente
+    private final int iMaxCuentasCliente = 5;
 
     /**
      * Creates new form Menu
@@ -24,7 +35,9 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         // Como un vector de array.
-        _clientes = new banco.DatosCliente[5];
+        _clientes = new banco.DatosCliente[iMaxClientes];
+        _cuentas = new banco.DatosCuenta[iMaxClientes * iMaxCuentasCliente];
+        
         // Como un array multidimencional 0,1,2,3,4 (cinco registros) y 0,1,2 (tres columnas [cui,nombre,apellido]) 
         //aclientes = new String[5][3];
     }
@@ -95,7 +108,8 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnCrearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearClienteActionPerformed
         // TODO add your handling code here:
-        if (iContadorCliente >= 5) {
+        // Verifica la cantidad de clientes creados
+        if (iContadorCliente > iMaxClientes) {
             JOptionPane.showMessageDialog(null, "No es posible crear mas clientes","Advertencia", JOptionPane.INFORMATION_MESSAGE);            
         
         } else {
@@ -135,11 +149,18 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
         // TODO add your handling code here:
-        banco.Cuenta crearCuenta = new banco.Cuenta();
+        banco.Cuenta crearCuenta = new banco.Cuenta(this, this._clientes);
         crearCuenta.setAlwaysOnTop(true);
         crearCuenta.setVisible(true);
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
+    public boolean AgregarNuevaCuenta()
+    {
+        boolean retorno = false;
+        
+        return retorno;
+    }
+    
     public boolean AgregarNuevoCliente( String Nombre, String Apellido, String CUI )
     {
         boolean existe = false;
@@ -161,7 +182,7 @@ public class Menu extends javax.swing.JFrame {
 //        System.out.println("------------- Asigna Vector Array");
         
         //valida que no hayan duplicados
-        for(int x=0; x<=4; x++)
+        for(int x=0; x<=iMaxClientes-1; x++)
         {
             if( _clientes[x] != null )
             {
@@ -174,7 +195,7 @@ public class Menu extends javax.swing.JFrame {
         
         if(!existe)
         {
-            _clientes[iContadorCliente] = new DatosCliente(CUI, Nombre, Apellido);
+            _clientes[iContadorCliente-1] = new DatosCliente(CUI, Nombre, Apellido);
             iContadorCliente++;
         }
                 
