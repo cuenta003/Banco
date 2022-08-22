@@ -27,7 +27,7 @@
           <Group type="102" attributes="0">
               <EmptySpace min="131" pref="131" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnMenu3" max="32767" attributes="0"/>
+                  <Component id="btnVisualizar" max="32767" attributes="0"/>
                   <Component id="btnCrearCuenta" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnCrearCliente" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -43,7 +43,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnCrearCuenta" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnMenu3" min="-2" max="-2" attributes="0"/>
+              <Component id="btnVisualizar" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="145" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -66,12 +66,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCrearCuentaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnMenu3">
+    <Component class="javax.swing.JButton" name="btnVisualizar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Visualizar Info Clientes"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMenu3ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisualizarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

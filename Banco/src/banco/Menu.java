@@ -53,7 +53,7 @@ public class Menu extends javax.swing.JFrame {
 
         btnCrearCliente = new javax.swing.JButton();
         btnCrearCuenta = new javax.swing.JButton();
-        btnMenu3 = new javax.swing.JButton();
+        btnVisualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu");
@@ -72,10 +72,10 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        btnMenu3.setText("Visualizar Info Clientes");
-        btnMenu3.addActionListener(new java.awt.event.ActionListener() {
+        btnVisualizar.setText("Visualizar Info Clientes");
+        btnVisualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMenu3ActionPerformed(evt);
+                btnVisualizarActionPerformed(evt);
             }
         });
 
@@ -86,7 +86,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(131, 131, 131)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnMenu3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCrearCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCrearCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(108, Short.MAX_VALUE))
@@ -99,7 +99,7 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnCrearCuenta)
                 .addGap(18, 18, 18)
-                .addComponent(btnMenu3)
+                .addComponent(btnVisualizar)
                 .addContainerGap(145, Short.MAX_VALUE))
         );
 
@@ -113,7 +113,6 @@ public class Menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No es posible crear mas clientes","Advertencia", JOptionPane.INFORMATION_MESSAGE);            
         
         } else {
-            
             banco.Cliente creaCliente = new banco.Cliente(this, iContadorCliente);
             creaCliente.setAlwaysOnTop(true);
             creaCliente.setVisible(true);
@@ -121,9 +120,12 @@ public class Menu extends javax.swing.JFrame {
         //this.setVisible(false);
     }//GEN-LAST:event_btnCrearClienteActionPerformed
 
-    private void btnMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu3ActionPerformed
+    private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
         // TODO add your handling code here:
         
+        banco.Informacion Info = new banco.Informacion(this, this._clientes);
+        Info.setAlwaysOnTop(true);
+        Info.setVisible(true);
         // Visualiza informacion de Clientes Array Multidimencional
 //        for(int x=0; x<=4; x++){
 //            for(int y=0; y<=2; y++){
@@ -133,19 +135,19 @@ public class Menu extends javax.swing.JFrame {
 //        }
         
         //Visualiza Vector Array
-        for(int x=0; x<=4; x++)
-        {
-            if( _clientes[x] != null ){
-                System.out.println( _clientes[x].CUI + "; " +
-                        _clientes[x].Nombre + "; " +
-                        _clientes[x].Apellido );
-            }
-            else
-            {
-                System.out.println("nulo");
-            }
-        }
-    }//GEN-LAST:event_btnMenu3ActionPerformed
+//        for(int x=0; x<=4; x++)
+//        {
+//            if( _clientes[x] != null ){
+//                System.out.println( _clientes[x].CUI + "; " +
+//                        _clientes[x].Nombre + "; " +
+//                        _clientes[x].Apellido );
+//            }
+//            else
+//            {
+//                System.out.println("nulo");
+//            }
+//        }
+    }//GEN-LAST:event_btnVisualizarActionPerformed
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
         // TODO add your handling code here:
@@ -154,11 +156,51 @@ public class Menu extends javax.swing.JFrame {
         crearCuenta.setVisible(true);
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
-    public boolean AgregarNuevaCuenta()
+    
+    public int CantidadCuentasPorCui( String cui )
     {
-        boolean retorno = false;
+        int Cantidad = 0;
+        for(int x=0; x<=(iMaxClientes * iMaxCuentasCliente)-1; x++)
+        {
+            // que el registro no sea nulo
+            if( _cuentas[x] != null )
+            {
+                //si el cui es igual determina cuantas cuentas lleva registradas
+                if(cui.equals(_cuentas[x].CUI))
+                {
+                    Cantidad++;
+                }
+            }
+            
+        }
+        return Cantidad;
+    }
+    
+    public boolean AgregarNuevaCuenta( String numerocuenta, String tipo, String cui)
+    {
+        boolean existe = false;
         
-        return retorno;
+        
+        for(int x=0; x<=(iMaxClientes * iMaxCuentasCliente)-1; x++)
+        {
+            if( _cuentas[x] != null )
+            {
+                
+                // que no existan cuentas duplicadas
+                if( numerocuenta.equals(_cuentas[x].NumeroCuenta) )
+                {
+                    existe = true;
+                }
+            }
+        }
+        
+        if(!existe)
+        {
+            _cuentas[this.iCuentaBancoId] = new banco.DatosCuenta(numerocuenta, tipo, cui, iCuentaBancoId);
+            iCuentaBancoId++;
+        }
+        
+        return existe;
     }
     
     public boolean AgregarNuevoCliente( String Nombre, String Apellido, String CUI )
@@ -240,6 +282,6 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearCliente;
     private javax.swing.JButton btnCrearCuenta;
-    private javax.swing.JButton btnMenu3;
+    private javax.swing.JButton btnVisualizar;
     // End of variables declaration//GEN-END:variables
 }

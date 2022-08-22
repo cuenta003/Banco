@@ -4,6 +4,10 @@
  */
 package banco;
 
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 /**
  *
  * @author macbookpro
@@ -12,6 +16,7 @@ public class Cuenta extends javax.swing.JFrame {
 
     private banco.Menu mainFrame;
     private banco.DatosCliente[] _clientes;
+    
 
     /**
      * Creates new form Cuenta
@@ -24,6 +29,31 @@ public class Cuenta extends javax.swing.JFrame {
         initComponents();
         this.mainFrame = mainframe;
         this._clientes = clientes;
+        
+        this.txtNCuenta.getDocument().addDocumentListener( new DocumentListener() {
+            
+            public void changedUpdate( DocumentEvent e) {
+                changed();
+            }
+            
+            public void removeUpdate( DocumentEvent e) {
+                changed();
+            }
+            
+            public void insertUpdate( DocumentEvent e) {
+                changed();
+            }
+            
+            public void changed() {
+                if(txtNCuenta.getText().equals("")){
+                   btnCrear.setEnabled(false);
+                }
+                else {
+                    btnCrear.setEnabled(true);
+                }
+            }
+            
+        });
     }
 
     /**
@@ -49,6 +79,12 @@ public class Cuenta extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -129,8 +165,20 @@ public class Cuenta extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-        mainFrame.AgregarNuevaCuenta();
-        this.dispose();
+        
+        Object cmboitem = this.cmbClientes.getSelectedItem();
+        String[] parts = cmboitem.toString().split("-");
+        String part1 = parts[0];
+        int maxcuentas = mainFrame.CantidadCuentasPorCui(part1);
+        if(maxcuentas>=6)
+        {
+            JOptionPane.showMessageDialog(null, "No es posible crear mas cuentas para el cliente seleccionado.","Advertencia", JOptionPane.INFORMATION_MESSAGE);            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Cuenta creada exitosamente","Advertencia", JOptionPane.INFORMATION_MESSAGE);    
+            this.dispose();
+        }
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -146,6 +194,18 @@ public class Cuenta extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_formWindowActivated
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        this.mainFrame.setEnabled(true);
+        this.mainFrame.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this.mainFrame.setEnabled(false);
+        this.mainFrame.setVisible(false);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
