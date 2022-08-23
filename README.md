@@ -40,12 +40,13 @@ La asignacion se puede realizar de la siguiente forma.
  _clientes[1] = new DatosCliente(cui1,nombre1,apellido1);
  _clientes[n] = new DatosCliente(cuin,nombren,apellidon);
  
- Agregadas las Ventanas de Crear Cliente
- Agregadas las ventanas de Crear Cuenta y su vinculacion a un Cliente
- Agregada parcialmente la ventana de Visualizar Informacion Cliente
-    pendiente la busqueda de cuentas asociadas
- Pendiente la ventana de movimientos
- Pendiente la ventana de detalle
+ Agregadas las Ventanas de:
+ - Crear Cliente.
+ - Crear Cuenta y su vinculacion a un Cliente.
+ - Parcialmente la ventana de Visualizar Informacion Cliente.
+    - pendiente la busqueda de cuentas asociadas.
+ - Pendiente la ventana de movimientos.
+ - Pendiente la ventana de detalle
  
  Validaciones efectuadas:
  
@@ -53,6 +54,5 @@ La asignacion se puede realizar de la siguiente forma.
  - Maximo de Cuentas por Cliente a poder crear.
  - Aceptar numeros en el campo de CUI para ventana Cliente
  - Aceptar numeros en el campo de CUI para ventana Informacion.
- - 
  
  
