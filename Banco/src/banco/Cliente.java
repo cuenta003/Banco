@@ -4,6 +4,8 @@
  */
 package banco;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,7 +28,7 @@ public class Cliente extends javax.swing.JFrame {
     public Cliente(banco.Menu mainframe, int contador) {
         initComponents();
         this.mainFrame = mainframe;
-        this.lblContador.setText( "Cliente: " + contador );
+        this.lblContador.setText("Cliente: " + contador);
     }
 
     /**
@@ -52,6 +54,9 @@ public class Cliente extends javax.swing.JFrame {
         setTitle("Crea Cliente");
         setName("frameCliente"); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
@@ -139,14 +144,11 @@ public class Cliente extends javax.swing.JFrame {
                 this.txtApellido.getText(),
                 this.txtCUI.getText()
         );
-        
-        if(existe)
-        {
-            JOptionPane.showMessageDialog(null, "No se pueden crear clientes con CUI duplicados. El CUI ingresado ya existe em el sistema.","Advertencia", JOptionPane.INFORMATION_MESSAGE);            
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Cliente creado exitosamente","Advertencia", JOptionPane.INFORMATION_MESSAGE);    
+
+        if (existe) {
+            JOptionPane.showMessageDialog(null, "No se pueden crear clientes con CUI duplicados. El CUI ingresado ya existe em el sistema.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Cliente creado exitosamente", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
         }
     }//GEN-LAST:event_btnCrearActionPerformed
@@ -169,6 +171,22 @@ public class Cliente extends javax.swing.JFrame {
         this.mainFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        txtCUI.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (txtCUI.getText().length() >= 13) // limit to 3 characters
+                    e.consume();
+                char c = e.getKeyChar();
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+                    e.consume();  // if it's not a number, ignore the event
+                }
+            }
+        });
+    }//GEN-LAST:event_formWindowActivated
 
 
     /*

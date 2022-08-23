@@ -4,6 +4,8 @@
  */
 package banco;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,10 +28,10 @@ public class Informacion extends javax.swing.JFrame {
 
     public Informacion(banco.Menu mainframe, banco.DatosCliente[] clientes) {
         initComponents();
-        
+
         this.mainFrame = mainframe;
         _clientes = clientes;
-        
+
     }
 
     private void LlenaTabla() {
@@ -38,17 +40,16 @@ public class Informacion extends javax.swing.JFrame {
         model.addColumn("CUI");
         model.addColumn("Nombre");
         model.addColumn("Apellido");
-        
-        for(int x=0; x<=4; x++)
-        {
-            if( _clientes[x] != null ){
+
+        for (int x = 0; x <= 4; x++) {
+            if (_clientes[x] != null) {
                 model.addRow(new Object[]{_clientes[x].CUI,
                     _clientes[x].Nombre,
                     _clientes[x].Apellido
                 });
             }
         }
-        
+
         this.tableClientes.setModel(model);
 
     }
@@ -174,6 +175,17 @@ public class Informacion extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
+
+        txtCUIBuscar.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+                    e.consume();  // if it's not a number, ignore the event
+                }
+            }
+        });
+
         LlenaTabla();
     }//GEN-LAST:event_formWindowActivated
 
@@ -222,6 +234,7 @@ public class Informacion extends javax.swing.JFrame {
                 new Informacion().setVisible(true);
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
