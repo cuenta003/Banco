@@ -6,6 +6,7 @@ package banco;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,6 +30,7 @@ public class Cliente extends javax.swing.JFrame {
         initComponents();
         this.mainFrame = mainframe;
         this.lblContador.setText("Cliente: " + contador);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -59,6 +61,9 @@ public class Cliente extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -187,6 +192,13 @@ public class Cliente extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_formWindowActivated
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.mainFrame.setEnabled(true);
+        this.mainFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
 
     /*

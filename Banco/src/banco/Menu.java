@@ -123,30 +123,10 @@ public class Menu extends javax.swing.JFrame {
     private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
         // TODO add your handling code here:
         
-        banco.Informacion Info = new banco.Informacion(this, this._clientes);
+        banco.Informacion Info = new banco.Informacion(this, this._clientes, this._cuentas);
         Info.setAlwaysOnTop(true);
         Info.setVisible(true);
-        // Visualiza informacion de Clientes Array Multidimencional
-//        for(int x=0; x<=4; x++){
-//            for(int y=0; y<=2; y++){
-//                System.out.print(aclientes[x][y] + "; "); //imprime tres columnas
-//            }
-//            System.out.println(""); // salto de linea
-//        }
-        
-        //Visualiza Vector Array
-//        for(int x=0; x<=4; x++)
-//        {
-//            if( _clientes[x] != null ){
-//                System.out.println( _clientes[x].CUI + "; " +
-//                        _clientes[x].Nombre + "; " +
-//                        _clientes[x].Apellido );
-//            }
-//            else
-//            {
-//                System.out.println("nulo");
-//            }
-//        }
+
     }//GEN-LAST:event_btnVisualizarActionPerformed
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
@@ -190,6 +170,7 @@ public class Menu extends javax.swing.JFrame {
                 if( numerocuenta.equals(_cuentas[x].NumeroCuenta) )
                 {
                     existe = true;
+                    break;
                 }
             }
         }
@@ -206,22 +187,6 @@ public class Menu extends javax.swing.JFrame {
     public boolean AgregarNuevoCliente( String Nombre, String Apellido, String CUI )
     {
         boolean existe = false;
-//        System.out.println("--- Nombre    " + Nombre);
-//        System.out.println("--- Apellidos " + Apellido);
-//        System.out.println("--- CUI       " + CUI);
-//        System.out.println("------------- Dimension aclientes[][]");
-//        System.out.println(aclientes.length);
-//        System.out.println("------------- Contador Actual");
-//        System.out.println(iContadorCliente);
-//        System.out.println("------------- Asigna Array Multi");
-//        aclientes[iContadorCliente][0] = CUI;
-//        aclientes[iContadorCliente][1] = Nombre;
-//        aclientes[iContadorCliente][2] = Apellido;
-//        System.out.println("------------- Despliga");        
-//        System.out.println(aclientes[iContadorCliente][0]);
-//        System.out.println(aclientes[iContadorCliente][1]);
-//        System.out.println(aclientes[iContadorCliente][2]);
-//        System.out.println("------------- Asigna Vector Array");
         
         //valida que no hayan duplicados
         for(int x=0; x<=iMaxClientes-1; x++)

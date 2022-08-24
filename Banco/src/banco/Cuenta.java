@@ -4,6 +4,7 @@
  */
 package banco;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -16,7 +17,7 @@ public class Cuenta extends javax.swing.JFrame {
 
     private banco.Menu mainFrame;
     private banco.DatosCliente[] _clientes;
-    
+    private final int iMaximoCuentasPorCliente = 6;
 
     /**
      * Creates new form Cuenta
@@ -29,31 +30,7 @@ public class Cuenta extends javax.swing.JFrame {
         initComponents();
         this.mainFrame = mainframe;
         this._clientes = clientes;
-        
-        this.txtNCuenta.getDocument().addDocumentListener( new DocumentListener() {
-            
-            public void changedUpdate( DocumentEvent e) {
-                changed();
-            }
-            
-            public void removeUpdate( DocumentEvent e) {
-                changed();
-            }
-            
-            public void insertUpdate( DocumentEvent e) {
-                changed();
-            }
-            
-            public void changed() {
-                if(txtNCuenta.getText().equals("")){
-                   btnCrear.setEnabled(false);
-                }
-                else {
-                    btnCrear.setEnabled(true);
-                }
-            }
-            
-        });
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -165,33 +142,74 @@ public class Cuenta extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-        
+
+        // Cuenta
+        String cuenta = this.txtNCuenta.getText();
+
+        // Tipo
+        String tipo = this.cmbTipoCuenta.getSelectedItem().toString();
+
+        // Seleccion de Cliente
         Object cmboitem = this.cmbClientes.getSelectedItem();
         String[] parts = cmboitem.toString().split("-");
-        String part1 = parts[0];
-        int maxcuentas = mainFrame.CantidadCuentasPorCui(part1);
-        if(maxcuentas>=6)
-        {
-            JOptionPane.showMessageDialog(null, "No es posible crear mas cuentas para el cliente seleccionado.","Advertencia", JOptionPane.INFORMATION_MESSAGE);            
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Cuenta creada exitosamente","Advertencia", JOptionPane.INFORMATION_MESSAGE);    
+        String cui = parts[0];
+
+        // Determina cantidad de cuentas asignadas
+        int maxcuentas = mainFrame.CantidadCuentasPorCui(cui);
+
+        // Valida que la cantidad de cuentas asignadas no sea superado
+        if (maxcuentas >= iMaximoCuentasPorCliente) {
+            JOptionPane.showMessageDialog(null, "No es posible crear mas cuentas para el cliente seleccionado.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            boolean existe = this.mainFrame.AgregarNuevaCuenta(cuenta,
+                    tipo,
+                    cui
+            );
+            if (!existe) {
+                JOptionPane.showMessageDialog(null, "Cuenta creada exitosamente", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Cuenta ya se encuentra asignada", "Advertencia", JOptionPane.ERROR_MESSAGE);
+            
+            }
             this.dispose();
         }
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-
-        for (int i = 0; i < _clientes.length; i++) {
-            if (_clientes[i] != null) {
-                this.cmbClientes.addItem(_clientes[i].CUI + " - "
-                        + _clientes[i].Nombre
-                        + _clientes[i].Apellido
-                );
+        for (DatosCliente _cliente : _clientes) {
+            if (_cliente != null) {
+                this.cmbClientes.addItem(_cliente.CUI + " - " + _cliente.Nombre + _cliente.Apellido);
             }
         }
+
+        txtNCuenta.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                changed();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                changed();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                changed();
+            }
+
+            public void changed() {
+                if (txtNCuenta.getText().equals("")) {
+                    btnCrear.setEnabled(false);
+                } else {
+                    btnCrear.setEnabled(true);
+                }
+            }
+
+        });
 
     }//GEN-LAST:event_formWindowActivated
 

@@ -6,7 +6,9 @@ package banco;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.JTable;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 public class Informacion extends javax.swing.JFrame {
 
     banco.DatosCliente[] _clientes;
+    banco.DatosCuenta[] _cuentas;
     private banco.Menu mainFrame;
 
     /**
@@ -26,11 +29,31 @@ public class Informacion extends javax.swing.JFrame {
 
     }
 
-    public Informacion(banco.Menu mainframe, banco.DatosCliente[] clientes) {
+    public Informacion(banco.Menu mainframe, banco.DatosCliente[] clientes, banco.DatosCuenta[] cuentas) {
         initComponents();
 
         this.mainFrame = mainframe;
         _clientes = clientes;
+        _cuentas = cuentas;
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    private void LlenaLista(String cui) {
+        DefaultListModel<String>  model = new DefaultListModel<>();
+        System.out.println(_cuentas.length);
+        
+        for (int x = 0; x <= (_cuentas.length)-1; x++) {
+            if(_cuentas[x] != null)
+            {
+                System.out.println(_cuentas[x].CUI + " " + _cuentas[x].NumeroCuenta);
+                
+                if(_cuentas[x].CUI.equals(cui)){
+                    model.addElement( _cuentas[x].NumeroCuenta);
+                }
+            }
+        }
+        
+        this.lstCuentas.setModel(model);
 
     }
 
@@ -68,9 +91,10 @@ public class Informacion extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtCUIBuscar = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnBuscarCta = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstCuentas = new javax.swing.JList<>();
+        btnSalir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -105,14 +129,21 @@ public class Informacion extends javax.swing.JFrame {
 
         jLabel2.setText("CUI");
 
-        jButton1.setText("Buscar Ctas. Asocciadas");
-
-        lstCuentas.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        btnBuscarCta.setText("Buscar Ctas. Asocciadas");
+        btnBuscarCta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCtaActionPerformed(evt);
+            }
         });
+
         jScrollPane2.setViewportView(lstCuentas);
+
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,9 +155,11 @@ public class Informacion extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2)
-                    .addComponent(txtCUIBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCUIBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscarCta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -136,10 +169,14 @@ public class Informacion extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtCUIBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnBuscarCta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnSalir)
+                        .addGap(9, 9, 9)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel1.setText("Lista de Clientes");
@@ -167,7 +204,7 @@ public class Informacion extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -200,6 +237,27 @@ public class Informacion extends javax.swing.JFrame {
         this.mainFrame.setEnabled(false);
         this.mainFrame.setVisible(false);
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnBuscarCtaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCtaActionPerformed
+        // TODO add your handling code here:
+        String datoBuscar = this.txtCUIBuscar.getText();
+        if (datoBuscar.length() > 0) {
+            
+            this.LlenaLista(datoBuscar);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese CUI a buscar",
+                    "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+    }//GEN-LAST:event_btnBuscarCtaActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        this.mainFrame.setEnabled(true);
+        this.mainFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,7 +296,8 @@ public class Informacion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnBuscarCta;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

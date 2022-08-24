@@ -22,5 +22,6 @@ public class DatosCuenta {
         this.Tipo = tipo;
         this.CUI = Cui;
         this.Id = id;
+        this.Saldo = 0;
     }
 }
