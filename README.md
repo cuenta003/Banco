@@ -36,15 +36,16 @@ Propiedad tipo arreglo multi dimencional de un tipo de objeto.
   
 La asignacion se puede realizar de la siguiente forma.
 
- _clientes[0] = new DatosCliente(cui0,nombre0,apellido0);
- _clientes[1] = new DatosCliente(cui1,nombre1,apellido1);
- _clientes[n] = new DatosCliente(cuin,nombren,apellidon);
+ * _clientes[0] = new DatosCliente(cui0,nombre0,apellido0);
+ * _clientes[1] = new DatosCliente(cui1,nombre1,apellido1);
+ * _clientes[n] = new DatosCliente(cuin,nombren,apellidon);
  
  Agregadas las Ventanas de:
+ 
  - Crear Cliente.
  - Crear Cuenta y su vinculacion a un Cliente.
  - Parcialmente la ventana de Visualizar Informacion Cliente.
-    - pendiente la busqueda de cuentas asociadas.
+    - Busqueda funciona, no funciona el agregarlo a una lista.
  - Pendiente la ventana de movimientos.
  - Pendiente la ventana de detalle
  
