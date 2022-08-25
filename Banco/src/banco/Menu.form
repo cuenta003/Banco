@@ -30,6 +30,7 @@
                   <Component id="btnVisualizar" max="32767" attributes="0"/>
                   <Component id="btnCrearCuenta" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnCrearCliente" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnMovimiento" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="108" max="32767" attributes="0"/>
           </Group>
@@ -44,7 +45,9 @@
               <Component id="btnCrearCuenta" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnVisualizar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="145" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnMovimiento" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="104" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -72,6 +75,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisualizarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnMovimiento">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Movimiento Bancario"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMovimientoActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

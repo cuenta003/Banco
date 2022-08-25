@@ -54,6 +54,7 @@ public class Menu extends javax.swing.JFrame {
         btnCrearCliente = new javax.swing.JButton();
         btnCrearCuenta = new javax.swing.JButton();
         btnVisualizar = new javax.swing.JButton();
+        btnMovimiento = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu");
@@ -79,6 +80,13 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        btnMovimiento.setText("Movimiento Bancario");
+        btnMovimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMovimientoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,7 +96,8 @@ public class Menu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCrearCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCrearCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCrearCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMovimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(108, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -100,7 +109,9 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(btnCrearCuenta)
                 .addGap(18, 18, 18)
                 .addComponent(btnVisualizar)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnMovimiento)
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,6 +146,13 @@ public class Menu extends javax.swing.JFrame {
         crearCuenta.setAlwaysOnTop(true);
         crearCuenta.setVisible(true);
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
+
+    private void btnMovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovimientoActionPerformed
+        // TODO add your handling code here:
+        banco.Movimiento crearMovimiento = new banco.Movimiento(this);
+        crearMovimiento.setAlwaysOnTop(true);
+        crearMovimiento.setVisible(true);
+    }//GEN-LAST:event_btnMovimientoActionPerformed
 
     
     public int CantidadCuentasPorCui( String cui )
@@ -247,6 +265,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearCliente;
     private javax.swing.JButton btnCrearCuenta;
+    private javax.swing.JButton btnMovimiento;
     private javax.swing.JButton btnVisualizar;
     // End of variables declaration//GEN-END:variables
 }
