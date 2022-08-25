@@ -36,6 +36,7 @@ public class Informacion extends javax.swing.JFrame {
         this.mainFrame = padre;
         _clientes = clientes;
         _cuentas = cuentas;
+        
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 

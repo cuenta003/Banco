@@ -149,7 +149,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnMovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovimientoActionPerformed
         // TODO add your handling code here:
-        banco.Movimiento crearMovimiento = new banco.Movimiento(this);
+        banco.Movimiento crearMovimiento = new banco.Movimiento(this, this._clientes, this._cuentas);
         crearMovimiento.setAlwaysOnTop(true);
         crearMovimiento.setVisible(true);
     }//GEN-LAST:event_btnMovimientoActionPerformed

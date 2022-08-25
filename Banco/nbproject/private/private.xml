@@ -5,10 +5,7 @@
         <group>
             <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/Menu.java</file>
             <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/DatosCuenta.java</file>
-            <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/Cuenta.java</file>
-            <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/Informacion.java</file>
-            <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/Login.java</file>
-            <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/Cliente.java</file>
+            <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/Movimiento.java</file>
         </group>
     </open-files>
 </project-private>
