@@ -42,12 +42,11 @@ La asignacion se puede realizar de la siguiente forma.
  
  Agregadas las Ventanas de:
  
- - Crear Cliente.
- - Crear Cuenta y su vinculacion a un Cliente.
- - Parcialmente la ventana de Visualizar Informacion Cliente.
- - =======================
- - Pendiente la ventana de movimientos.
- - Pendiente la ventana de detalle
+ - Crear Cliente. (listo)
+ - Crear Cuenta y su vinculacion a un Cliente. (listo)
+ - Visualizar Informacion Cliente. (listo)
+ - Movimientos.  <==== Trabajando
+ - Detalle Transacciones. <===== Pendiente
  
  Validaciones efectuadas:
  
