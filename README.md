@@ -45,7 +45,7 @@ La asignacion se puede realizar de la siguiente forma.
  - Crear Cliente.
  - Crear Cuenta y su vinculacion a un Cliente.
  - Parcialmente la ventana de Visualizar Informacion Cliente.
-    - Busqueda funciona, no funciona el agregarlo a una lista.
+ - =======================
  - Pendiente la ventana de movimientos.
  - Pendiente la ventana de detalle
  
