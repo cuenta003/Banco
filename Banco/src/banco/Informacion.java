@@ -6,6 +6,7 @@ package banco;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Objects;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -39,21 +40,21 @@ public class Informacion extends javax.swing.JFrame {
     }
 
     private void LlenaLista(String cui) {
-        DefaultListModel<String>  model = new DefaultListModel<>();
-        System.out.println(_cuentas.length);
+        DefaultListModel  model = new DefaultListModel();
         
         for (int x = 0; x <= (_cuentas.length)-1; x++) {
             if(_cuentas[x] != null)
             {
-                System.out.println(_cuentas[x].CUI + " " + _cuentas[x].NumeroCuenta);
-                
-                if(_cuentas[x].CUI.equals(cui)){
-                    model.addElement( _cuentas[x].NumeroCuenta);
+                String sCta = _cuentas[x].NumeroCuenta.trim();
+                String sCui = _cuentas[x].CUI.trim();
+  
+                if( Objects.equals(cui, sCui)){
+                    model.addElement( sCta );
                 }
             }
         }
         
-        this.lstCuentas.setModel(model);
+        lstCuentas.setModel(model);
 
     }
 
@@ -92,9 +93,9 @@ public class Informacion extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtCUIBuscar = new javax.swing.JTextField();
         btnBuscarCta = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lstCuentas = new javax.swing.JList<>();
         btnSalir = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lstCuentas = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -136,14 +137,14 @@ public class Informacion extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane2.setViewportView(lstCuentas);
-
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
             }
         });
+
+        jScrollPane3.setViewportView(lstCuentas);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -154,8 +155,8 @@ public class Informacion extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
-                    .addComponent(txtCUIBuscar))
+                    .addComponent(jScrollPane3)
+                    .addComponent(txtCUIBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBuscarCta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,11 +172,9 @@ public class Informacion extends javax.swing.JFrame {
                     .addComponent(txtCUIBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarCta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSalir)
-                        .addGap(9, 9, 9)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -191,7 +190,7 @@ public class Informacion extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(29, 29, 29))
         );
@@ -243,7 +242,7 @@ public class Informacion extends javax.swing.JFrame {
         String datoBuscar = this.txtCUIBuscar.getText();
         if (datoBuscar.length() > 0) {
             
-            this.LlenaLista(datoBuscar);
+            LlenaLista(datoBuscar);
 
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese CUI a buscar",
@@ -302,7 +301,7 @@ public class Informacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList<String> lstCuentas;
     private javax.swing.JTable tableClientes;
     private javax.swing.JTextField txtCUIBuscar;
