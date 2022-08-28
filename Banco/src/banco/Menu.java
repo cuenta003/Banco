@@ -4,6 +4,7 @@
  */
 package banco;
 
+import java.util.Date;
 import javax.swing.JOptionPane;
 import sun.security.util.Debug;
 
@@ -15,19 +16,25 @@ public class Menu extends javax.swing.JFrame {
 
     private banco.DatosCliente[] _clientes;
     private banco.DatosCuenta[] _cuentas;
-    //private String[][] aclientes;
-    
+    private banco.DatosMovimientos[] _movimientos;
+
     //Contador de Clientes
     public int iContadorCliente = 1;
-    
+
+    //Contador de Clientes
+    public int iContadorMov = 1000;
+
     //Identificador Unico para Cuentas Bancarias
     public int iCuentaBancoId = 1;
-    
+
     //numero maximo clientes
     private final int iMaxClientes = 5;
-    
+
     //numero maximo cuentas por cliente
     private final int iMaxCuentasCliente = 5;
+
+    //numero maximo cuentas por cliente
+    private final int iMaxMovCuentas = 10;
 
     /**
      * Creates new form Menu
@@ -37,7 +44,8 @@ public class Menu extends javax.swing.JFrame {
         // Como un vector de array.
         _clientes = new banco.DatosCliente[iMaxClientes];
         _cuentas = new banco.DatosCuenta[iMaxClientes * iMaxCuentasCliente];
-        
+        _movimientos = new banco.DatosMovimientos[iMaxClientes * iMaxCuentasCliente * iMaxMovCuentas];
+
         // Como un array multidimencional 0,1,2,3,4 (cinco registros) y 0,1,2 (tres columnas [cui,nombre,apellido]) 
         //aclientes = new String[5][3];
     }
@@ -126,8 +134,8 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         // Verifica la cantidad de clientes creados
         if (iContadorCliente > iMaxClientes) {
-            JOptionPane.showMessageDialog(null, "No es posible crear mas clientes","Advertencia", JOptionPane.INFORMATION_MESSAGE);            
-        
+            JOptionPane.showMessageDialog(null, "No es posible crear mas clientes", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+
         } else {
             banco.Cliente creaCliente = new banco.Cliente(this, iContadorCliente);
             creaCliente.setAlwaysOnTop(true);
@@ -138,7 +146,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
         // TODO add your handling code here:
-        
+
         banco.Informacion Info = new banco.Informacion(this, this._clientes, this._cuentas);
         Info.setAlwaysOnTop(true);
         Info.setVisible(true);
@@ -164,93 +172,96 @@ public class Menu extends javax.swing.JFrame {
         DatosPrueba();
     }//GEN-LAST:event_formWindowActivated
 
-    
-    public int CantidadCuentasPorCui( String cui )
-    {
+    public int CantidadCuentasPorCui(String cui) {
         int Cantidad = 0;
-        for(int x=0; x<=(iMaxClientes * iMaxCuentasCliente)-1; x++)
-        {
+        for (int x = 0; x <= (iMaxClientes * iMaxCuentasCliente) - 1; x++) {
             // que el registro no sea nulo
-            if( _cuentas[x] != null )
-            {
+            if (_cuentas[x] != null) {
                 //si el cui es igual determina cuantas cuentas lleva registradas
-                if(cui.equals(_cuentas[x].CUI))
-                {
+                if (cui.equals(_cuentas[x].CUI)) {
                     Cantidad++;
                 }
             }
-            
+
         }
         return Cantidad;
     }
-    
-    public boolean AgregarNuevaCuenta( String numerocuenta, String tipo, String cui)
-    {
+
+    public boolean AgregarMovimiento(int iCuenta, String tipo, double monto, String operacion,
+            String servicio, String observaciones) {
+        boolean grabado = false;
+        if ((iContadorMov - 1000) <= 1250) {
+            _movimientos[this.iContadorMov - 1000] = new DatosMovimientos(iContadorMov,
+                    iCuenta,
+                    tipo,
+                    monto,
+                    operacion,
+                    servicio,
+                    observaciones);
+            grabado = true;
+
+            System.out.println(iContadorMov + "-" + iCuenta + "-" + tipo + " - " + monto + " - " + operacion);
+            iContadorMov++;
+        }
+
+        return grabado;
+    }
+
+    public boolean AgregarNuevaCuenta(String numerocuenta, String tipo, String cui) {
         boolean existe = false;
-        
-        
-        for(int x=0; x<=(iMaxClientes * iMaxCuentasCliente)-1; x++)
-        {
-            if( _cuentas[x] != null )
-            {
-                
+
+        for (int x = 0; x <= (iMaxClientes * iMaxCuentasCliente) - 1; x++) {
+            if (_cuentas[x] != null) {
+
                 // que no existan cuentas duplicadas
-                if( numerocuenta.equals(_cuentas[x].NumeroCuenta) )
-                {
+                if (numerocuenta.equals(_cuentas[x].NumeroCuenta)) {
                     existe = true;
                     break;
                 }
             }
         }
-        
-        if(!existe)
-        {
+
+        if (!existe) {
             _cuentas[this.iCuentaBancoId] = new banco.DatosCuenta(numerocuenta, tipo, cui, iCuentaBancoId);
             iCuentaBancoId++;
         }
-        
+
         return existe;
     }
-    
-    public boolean AgregarNuevoCliente( String Nombre, String Apellido, String CUI )
-    {
+
+    public boolean AgregarNuevoCliente(String Nombre, String Apellido, String CUI) {
         boolean existe = false;
-        
+
         //valida que no hayan duplicados
-        for(int x=0; x<=iMaxClientes-1; x++)
-        {
-            if( _clientes[x] != null )
-            {
-                if( CUI.equals(_clientes[x].CUI) )
-                {
+        for (int x = 0; x <= iMaxClientes - 1; x++) {
+            if (_clientes[x] != null) {
+                if (CUI.equals(_clientes[x].CUI)) {
                     existe = true;
                 }
             }
         }
-        
-        if(!existe)
-        {
-            _clientes[iContadorCliente-1] = new DatosCliente(CUI, Nombre, Apellido);
+
+        if (!existe) {
+            _clientes[iContadorCliente - 1] = new DatosCliente(CUI, Nombre, Apellido);
             iContadorCliente++;
         }
-                
+
         return existe;
     }
-    
-    private void DatosPrueba()
-    {
+
+    private void DatosPrueba() {
         _clientes[0] = new DatosCliente("2553803990101", "Adrian Renato", "Garccia");
         _clientes[1] = new DatosCliente("2553814000101", "Ann", "Jefferson");
-        
+
         _cuentas[0] = new DatosCuenta("56460101", "Depositos", "2553803990101", 1);
         _cuentas[1] = new DatosCuenta("36180101", "Ahorros", "2553803990101", 2);
         _cuentas[2] = new DatosCuenta("44440101", "Depositos", "2553814000101", 3);
         _cuentas[3] = new DatosCuenta("39440101", "Ahorros", "2553814000101", 4);
         _cuentas[4] = new DatosCuenta("14500101", "Ahorros", "2553803990101", 5);
         _cuentas[5] = new DatosCuenta("09500101", "Ahorros", "2553803990101", 6);
-        
+
     }
-    
+
     /**
      * @param args the command line arguments
      */
