@@ -269,6 +269,8 @@ public class Movimiento extends javax.swing.JFrame {
         if (this.txtMonto.getText().length() > 0) {
             montoMayorCero = true;
         }
+        
+        //AQUI DETERMINAR EL MONTO DEL SALDO DE LA CUENTA SELECCIONADA
 
         if (cmbOperacionbancaria.getSelectedItem() == "Transferencia") {
             if (montoMayorCero) {

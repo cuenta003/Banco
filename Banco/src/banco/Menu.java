@@ -186,6 +186,9 @@ public class Menu extends javax.swing.JFrame {
         }
         return Cantidad;
     }
+    
+    public void SaldoCuenta( int cuenta ){
+    }
 
     public boolean AgregarMovimiento(int iCuenta, String tipo, double monto, String operacion,
             String servicio, String observaciones) {
@@ -200,7 +203,7 @@ public class Menu extends javax.swing.JFrame {
                     observaciones);
             grabado = true;
 
-            System.out.println(iContadorMov + "-" + iCuenta + "-" + tipo + " - " + monto + " - " + operacion);
+            System.out.println(iContadorMov + "-" + iCuenta + "-" + tipo + "¿-" + monto + "-" + operacion);
             iContadorMov++;
         }
 
