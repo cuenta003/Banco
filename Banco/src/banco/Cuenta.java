@@ -152,7 +152,7 @@ public class Cuenta extends javax.swing.JFrame {
         // Seleccion de Cliente
         Object cmboitem = this.cmbClientes.getSelectedItem();
         String[] parts = cmboitem.toString().split("-");
-        String cui = parts[0];
+        String cui = parts[0].trim();
 
         // Determina cantidad de cuentas asignadas
         int maxcuentas = mainFrame.CantidadCuentasPorCui(cui);

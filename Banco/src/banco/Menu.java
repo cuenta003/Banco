@@ -58,6 +58,11 @@ public class Menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         btnCrearCliente.setText("Registrar Clientes");
         btnCrearCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -154,6 +159,11 @@ public class Menu extends javax.swing.JFrame {
         crearMovimiento.setVisible(true);
     }//GEN-LAST:event_btnMovimientoActionPerformed
 
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        DatosPrueba();
+    }//GEN-LAST:event_formWindowActivated
+
     
     public int CantidadCuentasPorCui( String cui )
     {
@@ -225,6 +235,20 @@ public class Menu extends javax.swing.JFrame {
         }
                 
         return existe;
+    }
+    
+    private void DatosPrueba()
+    {
+        _clientes[0] = new DatosCliente("2553803990101", "Adrian Renato", "Garccia");
+        _clientes[1] = new DatosCliente("2553814000101", "Ann", "Jefferson");
+        
+        _cuentas[0] = new DatosCuenta("56460101", "Depositos", "2553803990101", 1);
+        _cuentas[1] = new DatosCuenta("36180101", "Ahorros", "2553803990101", 2);
+        _cuentas[2] = new DatosCuenta("44440101", "Depositos", "2553814000101", 3);
+        _cuentas[3] = new DatosCuenta("39440101", "Ahorros", "2553814000101", 4);
+        _cuentas[4] = new DatosCuenta("14500101", "Ahorros", "2553803990101", 5);
+        _cuentas[5] = new DatosCuenta("09500101", "Ahorros", "2553803990101", 6);
+        
     }
     
     /**

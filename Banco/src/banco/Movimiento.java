@@ -4,7 +4,11 @@
  */
 package banco;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import static java.lang.Integer.parseInt;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,10 +30,16 @@ public class Movimiento extends javax.swing.JFrame {
     public Movimiento(banco.Menu padre, DatosCliente[] clientes, DatosCuenta[] cuentas) {
         initComponents();
 
+        //FORMULARIO PADRE
         this.mainFrame = padre;
+
+        //DATOS CLIENTE
         this._clientes = clientes;
+
+        //CUENTAS BANCARIAS 
         this._cuentas = cuentas;
 
+        //HABILITA LA CONFIGURACION DE DESTRUIR EL FORMULARIO AL CERRARLO Y NO CERRAR LA APP
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
@@ -59,6 +69,11 @@ public class Movimiento extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Movimientos Bancarias");
         setAlwaysOnTop(true);
+        addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                formPropertyChange(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -74,6 +89,11 @@ public class Movimiento extends javax.swing.JFrame {
         jLabel1.setText("Tipo Operacion Bancaria");
 
         cmbOperacionbancaria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Deposito", "Transferencia", "Pago Servicios" }));
+        cmbOperacionbancaria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbOperacionbancariaActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Cuenta Bancaria Orig.");
 
@@ -86,6 +106,11 @@ public class Movimiento extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtaObservaciones);
 
         btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -95,6 +120,9 @@ public class Movimiento extends javax.swing.JFrame {
         });
 
         jLabel5.setText("Cuenta Bancaria Dest.");
+        jLabel5.setEnabled(false);
+
+        cmbCuentasDestino.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,9 +140,7 @@ public class Movimiento extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbCuentasOrigen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cmbOperacionbancaria, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbCuentasDestino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -160,6 +186,20 @@ public class Movimiento extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
+
+        // VALIDA NUMEROS Y UN PUNTO DECIMAL
+        txtMonto.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char caracter = e.getKeyChar();
+                if (((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE) && (caracter != '.' || txtMonto.getText().contains("."))) {
+                    e.consume();
+                    getToolkit().beep();
+                }
+            }
+        });
+
+        //LLENA EL COMBO CON LOS DATOS DE LAS CUENTAS
         for (DatosCuenta cuenta : _cuentas) {
             if (cuenta != null) {
                 String NombreCompleto = "";
@@ -171,7 +211,7 @@ public class Movimiento extends javax.swing.JFrame {
                     }
 
                 }
-                this.cmbCuentasOrigen.addItem(cuenta.NumeroCuenta + " - Cuenta de " + NombreCompleto);
+                this.cmbCuentasOrigen.addItem(cuenta.Id + " - " + cuenta.NumeroCuenta + " - Cuenta de " + NombreCompleto);
             }
         }
     }//GEN-LAST:event_formWindowActivated
@@ -194,6 +234,60 @@ public class Movimiento extends javax.swing.JFrame {
         this.mainFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        // TODO add your handling code here:
+
+        boolean montoMayorCero = false;
+
+        // Seleccion de Cliente
+        Object cmboitem = this.cmbCuentasOrigen.getSelectedItem();
+        String[] parts = cmboitem.toString().split("-");
+        String id = parts[0].trim();
+        int iId = parseInt(id);
+
+        if (this.txtMonto.getText().length() > 0) {
+            montoMayorCero = true;
+        }
+
+        if (cmbOperacionbancaria.getSelectedItem() == "Transferencia") {
+            if (montoMayorCero) {
+                double fMonto = Double.parseDouble(this.txtMonto.getText());
+                JOptionPane.showMessageDialog(null, "Deposito realizado exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "El monto de la transferencia deber ser mayor a 0.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } else if (cmbOperacionbancaria.getSelectedItem() == "Deposito") {
+            if (montoMayorCero) {
+                double fMonto = Double.parseDouble(this.txtMonto.getText());
+                JOptionPane.showMessageDialog(null, "Deposito realizado exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "El monto del deposito deber ser mayor a 0.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } else if (cmbOperacionbancaria.getSelectedItem() == "Pago Servicios") {
+
+        }
+
+
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void formPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_formPropertyChange
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_formPropertyChange
+
+    private void cmbOperacionbancariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbOperacionbancariaActionPerformed
+        // TODO add your handling code here:
+        if (cmbOperacionbancaria.getSelectedItem() == "Transferencia") {
+            jLabel5.setEnabled(true);
+            cmbCuentasDestino.setEnabled(true);
+        } else {
+            jLabel5.setEnabled(false);
+            cmbCuentasDestino.setEnabled(false);
+        }
+    }//GEN-LAST:event_cmbOperacionbancariaActionPerformed
 
     /**
      * @param args the command line arguments

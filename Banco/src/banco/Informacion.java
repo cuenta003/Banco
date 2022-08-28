@@ -219,6 +219,7 @@ public class Informacion extends javax.swing.JFrame {
                 char c = e.getKeyChar();
                 if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
                     e.consume();  // if it's not a number, ignore the event
+                    getToolkit().beep();
                 }
             }
         });
