@@ -34,6 +34,7 @@
                   <Component id="btnCrearCuenta" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnCrearCliente" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnMovimiento" alignment="1" max="32767" attributes="0"/>
+                  <Component id="btnHistorial" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="108" max="32767" attributes="0"/>
           </Group>
@@ -50,7 +51,9 @@
               <Component id="btnVisualizar" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnMovimiento" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="104" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnHistorial" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="63" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -86,6 +89,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMovimientoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnHistorial">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Historial  de Trans"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHistorialActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

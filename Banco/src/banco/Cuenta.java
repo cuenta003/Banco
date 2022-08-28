@@ -15,7 +15,7 @@ import javax.swing.event.DocumentListener;
  */
 public class Cuenta extends javax.swing.JFrame {
 
-    private banco.Menu mainFrame;
+    private banco.Menu _mainFrame;
     private banco.DatosCliente[] _clientes;
     private final int iMaximoCuentasPorCliente = 6;
 
@@ -28,7 +28,7 @@ public class Cuenta extends javax.swing.JFrame {
 
     public Cuenta(banco.Menu mainframe, banco.DatosCliente[] clientes) {
         initComponents();
-        this.mainFrame = mainframe;
+        this._mainFrame = mainframe;
         this._clientes = clientes;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
@@ -155,13 +155,13 @@ public class Cuenta extends javax.swing.JFrame {
         String cui = parts[0].trim();
 
         // Determina cantidad de cuentas asignadas
-        int maxcuentas = mainFrame.CantidadCuentasPorCui(cui);
+        int maxcuentas = _mainFrame.CantidadCuentasPorCui(cui);
 
         // Valida que la cantidad de cuentas asignadas no sea superado
         if (maxcuentas >= iMaximoCuentasPorCliente) {
             JOptionPane.showMessageDialog(null, "No es posible crear mas cuentas para el cliente seleccionado.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            boolean existe = this.mainFrame.AgregarNuevaCuenta(cuenta,
+            boolean existe = this._mainFrame.AgregarNuevaCuenta(cuenta,
                     tipo,
                     cui
             );
@@ -215,14 +215,14 @@ public class Cuenta extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        this.mainFrame.setEnabled(true);
-        this.mainFrame.setVisible(true);
+        this._mainFrame.setEnabled(true);
+        this._mainFrame.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        this.mainFrame.setEnabled(false);
-        this.mainFrame.setVisible(false);
+        this._mainFrame.setEnabled(false);
+        this._mainFrame.setVisible(false);
     }//GEN-LAST:event_formWindowOpened
 
     /**

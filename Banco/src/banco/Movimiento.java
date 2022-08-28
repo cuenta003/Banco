@@ -346,23 +346,32 @@ public class Movimiento extends javax.swing.JFrame {
             }
 
         } else if (cmbOperacionbancaria.getSelectedItem() == "Pago Servicios") {
-            
+
             // Determina si hay fondos suficientes
-            if(montoMayorCero){
-                
+            if (montoMayorCero) {
+
                 // Monto a Pagar
                 double dMonto = Double.parseDouble(this.txtMonto.getText());
-                
-                if(dSaldoO < dMonto ){
-                     JOptionPane.showMessageDialog(null, "La cuenta de origen no tiene suficientes fondos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+
+                if (dSaldoO < dMonto) {
+                    JOptionPane.showMessageDialog(null, "La cuenta de origen no tiene suficientes fondos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    
+                    Object oServicio = this.cmbServicios.getSelectedItem();
+                    String sServicioSeleccionado = oServicio.toString();
+
+                    boolean segrabo1 = this.mainFrame.AgregarMovimiento(icuentaorigen, stipo, dMonto, "Debito", sServicioSeleccionado, txtaObservaciones.getText());
+
+                    if (segrabo1) {
+                        // Nuevo saldo  de la cuenta origen tras pago servicio
+                        double nuevoSaldoO = dSaldoO - dMonto;
+                        this.mainFrame.CambiaSaldo(nuevoSaldoO, icuentaorigen);
+                        
+                        JOptionPane.showMessageDialog(null, "Pago realizado exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
-                else{
-                    JOptionPane.showMessageDialog(null, "Pago realizado exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
-                }
-                
-                
-            }
-            else {
+
+            } else {
                 JOptionPane.showMessageDialog(null, "El monto del pago debe ser mayor a 0.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
 

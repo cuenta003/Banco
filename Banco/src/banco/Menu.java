@@ -63,6 +63,7 @@ public class Menu extends javax.swing.JFrame {
         btnCrearCuenta = new javax.swing.JButton();
         btnVisualizar = new javax.swing.JButton();
         btnMovimiento = new javax.swing.JButton();
+        btnHistorial = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu");
@@ -100,6 +101,13 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        btnHistorial.setText("Historial  de Trans");
+        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistorialActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,7 +118,8 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(btnVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCrearCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCrearCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMovimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnMovimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnHistorial, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(108, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -124,7 +133,9 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(btnVisualizar)
                 .addGap(18, 18, 18)
                 .addComponent(btnMovimiento)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnHistorial)
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         pack();
@@ -171,6 +182,13 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         DatosPrueba();
     }//GEN-LAST:event_formWindowActivated
+
+    private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
+        // TODO add your handling code here:
+        banco.Historial creaHistorial = new banco.Historial(this, this._clientes, this._cuentas, this._movimientos);
+        creaHistorial.setAlwaysOnTop(true);
+        creaHistorial.setVisible(true);
+    }//GEN-LAST:event_btnHistorialActionPerformed
 
     public int CantidadCuentasPorCui(String cui) {
         int Cantidad = 0;
@@ -226,7 +244,7 @@ public class Menu extends javax.swing.JFrame {
                     observaciones);
             grabado = true;
 
-            System.out.println(iContadorMov + "-" + iCuenta + "-" + tipo + "-" + monto + "-" + operacion);
+            System.out.println(iContadorMov + "-" + iCuenta + "-" + tipo + "-" + monto + "-" + operacion + "-" + servicio);
             iContadorMov++;
         }
 
@@ -326,6 +344,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearCliente;
     private javax.swing.JButton btnCrearCuenta;
+    private javax.swing.JButton btnHistorial;
     private javax.swing.JButton btnMovimiento;
     private javax.swing.JButton btnVisualizar;
     // End of variables declaration//GEN-END:variables
