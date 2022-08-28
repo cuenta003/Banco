@@ -321,7 +321,7 @@ public class Movimiento extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "La cuenta de origen no tiene suficientes fondos.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "El monto de la transferencia deber ser mayor a 0.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "El monto de la transferencia deber ser mayor a 0.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
 
         } else if (cmbOperacionbancaria.getSelectedItem() == "Deposito") {
@@ -342,10 +342,29 @@ public class Movimiento extends javax.swing.JFrame {
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "El monto del deposito deber ser mayor a 0.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "El monto del deposito deber ser mayor a 0.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
 
         } else if (cmbOperacionbancaria.getSelectedItem() == "Pago Servicios") {
+            
+            // Determina si hay fondos suficientes
+            if(montoMayorCero){
+                
+                // Monto a Pagar
+                double dMonto = Double.parseDouble(this.txtMonto.getText());
+                
+                if(dSaldoO < dMonto ){
+                     JOptionPane.showMessageDialog(null, "La cuenta de origen no tiene suficientes fondos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Pago realizado exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                }
+                
+                
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "El monto del pago debe ser mayor a 0.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
 
         }
 
