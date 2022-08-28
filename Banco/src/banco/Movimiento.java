@@ -41,6 +41,22 @@ public class Movimiento extends javax.swing.JFrame {
 
         //HABILITA LA CONFIGURACION DE DESTRUIR EL FORMULARIO AL CERRARLO Y NO CERRAR LA APP
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        //LLENA EL COMBO CON LOS DATOS DE LAS CUENTAS
+        for (DatosCuenta cuenta : _cuentas) {
+            if (cuenta != null) {
+                String NombreCompleto = "";
+                for (DatosCliente cliente : _clientes) {
+                    if (cliente != null) {
+                        if (cliente.CUI.trim().equals(cuenta.CUI.trim())) {
+                            NombreCompleto = cliente.Nombre + " " + cliente.Apellido;
+                        }
+                    }
+
+                }
+                this.cmbCuentasOrigen.addItem(cuenta.Id + " - " + cuenta.NumeroCuenta + " - Cuenta de " + NombreCompleto);
+            }
+        }
     }
 
     /**
@@ -213,21 +229,7 @@ public class Movimiento extends javax.swing.JFrame {
             }
         });
 
-        //LLENA EL COMBO CON LOS DATOS DE LAS CUENTAS
-        for (DatosCuenta cuenta : _cuentas) {
-            if (cuenta != null) {
-                String NombreCompleto = "";
-                for (DatosCliente cliente : _clientes) {
-                    if (cliente != null) {
-                        if (cliente.CUI.trim().equals(cuenta.CUI.trim())) {
-                            NombreCompleto = cliente.Nombre + " " + cliente.Apellido;
-                        }
-                    }
 
-                }
-                this.cmbCuentasOrigen.addItem(cuenta.Id + " - " + cuenta.NumeroCuenta + " - Cuenta de " + NombreCompleto);
-            }
-        }
     }//GEN-LAST:event_formWindowActivated
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -255,7 +257,7 @@ public class Movimiento extends javax.swing.JFrame {
         boolean montoMayorCero = false;
 
         // Seleccion de Tipo
-        Object otipo = this.cmbOperacionbancaria .getSelectedItem();
+        Object otipo = this.cmbOperacionbancaria.getSelectedItem();
         String stipo = otipo.toString().trim();
 
         // Seleccion de Cliente
