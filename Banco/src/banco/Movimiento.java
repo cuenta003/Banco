@@ -52,7 +52,6 @@ public class Movimiento extends javax.swing.JFrame {
                             NombreCompleto = cliente.Nombre + " " + cliente.Apellido;
                         }
                     }
-
                 }
                 this.cmbCuentasOrigen.addItem(cuenta.Id + " - " + cuenta.NumeroCuenta + " - Cuenta de " + NombreCompleto);
             }
@@ -114,6 +113,12 @@ public class Movimiento extends javax.swing.JFrame {
         });
 
         jLabel2.setText("Cuenta Bancaria Orig.");
+
+        cmbCuentasOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCuentasOrigenActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Monto");
 
@@ -260,32 +265,79 @@ public class Movimiento extends javax.swing.JFrame {
         Object otipo = this.cmbOperacionbancaria.getSelectedItem();
         String stipo = otipo.toString().trim();
 
-        // Seleccion de Cliente
+        // Seleccion de Cuenta Origen para operaciones
         Object ocliente = this.cmbCuentasOrigen.getSelectedItem();
         String[] parts = ocliente.toString().split("-");
         String id = parts[0].trim();
-        int icuenta = parseInt(id);
+        int icuentaorigen = parseInt(id);
 
         if (this.txtMonto.getText().length() > 0) {
-            montoMayorCero = true;
+            if (Double.parseDouble(this.txtMonto.getText()) > 0) {
+                montoMayorCero = true;
+            }
         }
-        
-        //AQUI DETERMINAR EL MONTO DEL SALDO DE LA CUENTA SELECCIONADA
+
+        //Saldo cuenta origen
+        double dSaldoO = this.mainFrame.SaldoCuenta(icuentaorigen);
 
         if (cmbOperacionbancaria.getSelectedItem() == "Transferencia") {
+
+            // Seleccion de Cuenta Destino para operaciones
+            Object oDestino = this.cmbCuentasDestino.getSelectedItem();
+            String[] splitDestino = oDestino.toString().split("-");
+            String sId = splitDestino[0].trim();
+            int icuentadestino = parseInt(sId);
+
+            //Saldo cuenta destino
+            double dSaldoD = this.mainFrame.SaldoCuenta(icuentadestino);
+
             if (montoMayorCero) {
-                double fMonto = Double.parseDouble(this.txtMonto.getText());
-                JOptionPane.showMessageDialog(null, "Deposito realizado exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+
+                // Monto a Transferir
+                double dMonto = Double.parseDouble(this.txtMonto.getText());
+
+                // Determina saldo cuenta de origen mayor al monto a transferir
+                if (dSaldoO >= dMonto) {
+                    // Graba Historial de Movimiento
+                    boolean segrabo1 = this.mainFrame.AgregarMovimiento(icuentaorigen, stipo, dMonto, "Debito", "", txtaObservaciones.getText());
+                    boolean segrabo2 = this.mainFrame.AgregarMovimiento(icuentadestino, stipo, dMonto, "Credito", "", txtaObservaciones.getText());
+
+                    if (segrabo1) {
+
+                        // Nuevo saldo  de la cuenta origen tras transferencia
+                        double nuevoSaldoO = dSaldoO - dMonto;
+                        this.mainFrame.CambiaSaldo(nuevoSaldoO, icuentaorigen);
+
+                        // Nuevo saldo de la cuenta destino tras transferencia
+                        double nuevoSaldoD = dSaldoD + dMonto;
+                        this.mainFrame.CambiaSaldo(nuevoSaldoD, icuentadestino);
+
+                        JOptionPane.showMessageDialog(null, "Transferencia realizada exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error al grabar transferencia.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "La cuenta de origen no tiene suficientes fondos.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "El monto de la transferencia deber ser mayor a 0.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
             }
 
         } else if (cmbOperacionbancaria.getSelectedItem() == "Deposito") {
             if (montoMayorCero) {
-                double fMonto = Double.parseDouble(this.txtMonto.getText());
 
-                boolean segrabo = this.mainFrame.AgregarMovimiento(icuenta, stipo, fMonto, "Credito", "", txtaObservaciones.getText());
-                if (segrabo) {
+                // Monto a Depositar
+                double dMonto = Double.parseDouble(this.txtMonto.getText());
+
+                // Graba movimiento de deposito
+                boolean segrabo1 = this.mainFrame.AgregarMovimiento(icuentaorigen, stipo, dMonto, "Credito", "", txtaObservaciones.getText());
+
+                if (segrabo1) {
+                    // Nuevo saldo  de la cuenta origen tras transferencia
+                    double nuevoSaldoO = dSaldoO + dMonto;
+                    this.mainFrame.CambiaSaldo(nuevoSaldoO, icuentaorigen);
+
                     JOptionPane.showMessageDialog(null, "Deposito realizado exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                 }
 
@@ -324,6 +376,38 @@ public class Movimiento extends javax.swing.JFrame {
             cmbServicios.setEnabled(false);
         }
     }//GEN-LAST:event_cmbOperacionbancariaActionPerformed
+
+    private void cmbCuentasOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCuentasOrigenActionPerformed
+        // TODO add your handling code here:
+        //LLENA EL COMBO CON LOS DATOS DE LAS CUENTAS
+
+        // Seleccion de cuenta origen
+        Object ocliente = this.cmbCuentasOrigen.getSelectedItem();
+        String[] parts = ocliente.toString().split("-");
+        String id = parts[0].trim();
+        int icuentaorigen = parseInt(id);
+
+        // Borra contenido de combo de cuentas destino
+        this.cmbCuentasDestino.removeAllItems();
+
+        // Llena combo cuentas destino con nuevas cuentas expeto la de origen
+        for (DatosCuenta cuenta : _cuentas) {
+            if (cuenta != null) {
+                if (cuenta.Id == icuentaorigen) {
+                } else {
+                    String NombreCompleto = "";
+                    for (DatosCliente cliente : _clientes) {
+                        if (cliente != null) {
+                            if (cliente.CUI.trim().equals(cuenta.CUI.trim())) {
+                                NombreCompleto = cliente.Nombre + " " + cliente.Apellido;
+                            }
+                        }
+                    }
+                    this.cmbCuentasDestino.addItem(cuenta.Id + " - " + cuenta.NumeroCuenta + " - Cuenta de " + NombreCompleto);
+                }
+            }
+        }
+    }//GEN-LAST:event_cmbCuentasOrigenActionPerformed
 
     /**
      * @param args the command line arguments

@@ -187,7 +187,30 @@ public class Menu extends javax.swing.JFrame {
         return Cantidad;
     }
     
-    public void SaldoCuenta( int cuenta ){
+    public double SaldoCuenta( int cuenta ){
+        double dMonto = 0;
+        for (int x = 0; x <= (iMaxClientes * iMaxCuentasCliente) - 1; x++) {
+            // que el registro no sea nulo
+            if (_cuentas[x] != null) {
+                //si el cui es igual determina el saldo de la cuenta
+                if (cuenta == _cuentas[x].Id) {
+                    dMonto = _cuentas[x].Saldo;
+                }
+            }
+        }
+        return dMonto;
+    }
+    
+    public void CambiaSaldo( double saldo, int cuenta ){
+        for (int x = 0; x <= (iMaxClientes * iMaxCuentasCliente) - 1; x++) {
+            // que el registro no sea nulo
+            if (_cuentas[x] != null) {
+                //si el cui es igual determina el saldo de la cuenta
+                if (cuenta == _cuentas[x].Id) {
+                     _cuentas[x].Saldo = saldo;
+                }
+            }
+        }
     }
 
     public boolean AgregarMovimiento(int iCuenta, String tipo, double monto, String operacion,
@@ -203,7 +226,7 @@ public class Menu extends javax.swing.JFrame {
                     observaciones);
             grabado = true;
 
-            System.out.println(iContadorMov + "-" + iCuenta + "-" + tipo + "¿-" + monto + "-" + operacion);
+            System.out.println(iContadorMov + "-" + iCuenta + "-" + tipo + "-" + monto + "-" + operacion);
             iContadorMov++;
         }
 
