@@ -4,8 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/Menu.java</file>
-            <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/DatosMovimientos.java</file>
-            <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/Movimiento.java</file>
+            <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/DatosCuenta.java</file>
+            <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/Cuenta.java</file>
+            <file>file:/Users/macbookpro/proyectos/Banco/Banco/src/banco/Historial.java</file>
         </group>
     </open-files>
 </project-private>

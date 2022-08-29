@@ -17,8 +17,10 @@ public class Banco {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        banco.Login login = new banco.Login();
-        login.show();
+        //banco.Login login = new banco.Login();
+        //login.show();
+        banco.Inicio init = new banco.Inicio();
+        init.setVisible(true);
     }
     
 }

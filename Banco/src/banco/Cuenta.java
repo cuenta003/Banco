@@ -4,6 +4,8 @@
  */
 package banco;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
@@ -178,6 +180,18 @@ public class Cuenta extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
+        
+        txtNCuenta.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+                    e.consume();  // if it's not a number, ignore the event
+                    getToolkit().beep();
+                }
+            }
+        });
+                
         for (DatosCliente _cliente : _clientes) {
             if (_cliente != null) {
                 this.cmbClientes.addItem(_cliente.CUI + " - " + _cliente.Nombre + _cliente.Apellido);
