@@ -45,8 +45,9 @@ La asignacion se puede realizar de la siguiente forma.
  - Crear Cliente. (listo)
  - Crear Cuenta y su vinculacion a un Cliente. (listo)
  - Visualizar Informacion Cliente. (listo)
- - Movimientos.  <==== Trabajando
- - Detalle Transacciones. <===== Pendiente
+ - Movimientos.  (listo)
+ - Detalle Transacciones. <===== En Proceso
+   *  pendientes formateo fecha, columnas Debito, Credito y Saldo
  
  Validaciones efectuadas:
  
