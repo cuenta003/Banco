@@ -26,12 +26,14 @@ public class Cuenta extends javax.swing.JFrame {
      */
     public Cuenta() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     public Cuenta(banco.Menu mainframe, banco.DatosCliente[] clientes) {
         initComponents();
         this._mainFrame = mainframe;
         this._clientes = clientes;
+        this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 

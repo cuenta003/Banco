@@ -15,6 +15,7 @@ public class Inicio extends javax.swing.JFrame {
      */
     public Inicio() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -67,7 +68,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         // TODO add your handling code here:
-        banco.Login newlogin = new banco.Login();
+        banco.Login newlogin = new banco.Login(this);
         newlogin.setAlwaysOnTop(true);
         newlogin.setVisible(true);
     }//GEN-LAST:event_btnInicioActionPerformed

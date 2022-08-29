@@ -25,6 +25,7 @@ public class Movimiento extends javax.swing.JFrame {
      */
     public Movimiento() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     public Movimiento(banco.Menu padre, DatosCliente[] clientes, DatosCuenta[] cuentas) {
@@ -38,6 +39,8 @@ public class Movimiento extends javax.swing.JFrame {
 
         //CUENTAS BANCARIAS 
         this._cuentas = cuentas;
+        
+        this.setLocationRelativeTo(null);
 
         //HABILITA LA CONFIGURACION DE DESTRUIR EL FORMULARIO AL CERRARLO Y NO CERRAR LA APP
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

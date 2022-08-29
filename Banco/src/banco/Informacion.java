@@ -27,6 +27,7 @@ public class Informacion extends javax.swing.JFrame {
      */
     public Informacion() {
         initComponents();
+        this.setLocationRelativeTo(null);
 
     }
 
@@ -36,7 +37,7 @@ public class Informacion extends javax.swing.JFrame {
         this.mainFrame = padre;
         _clientes = clientes;
         _cuentas = cuentas;
-        
+        this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 

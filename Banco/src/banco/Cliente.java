@@ -24,11 +24,13 @@ public class Cliente extends javax.swing.JFrame {
      */
     public Cliente() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     public Cliente(banco.Menu mainframe, int contador) {
         initComponents();
         this.mainFrame = mainframe;
+        this.setLocationRelativeTo(null);
         this.lblContador.setText("Cliente: " + contador);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }

@@ -35,6 +35,9 @@ public class Menu extends javax.swing.JFrame {
 
     //numero maximo cuentas por cliente
     private final int iMaxMovCuentas = 10;
+    
+    //formulario padre
+    Login _padre;
 
     /**
      * Creates new form Menu
@@ -45,6 +48,18 @@ public class Menu extends javax.swing.JFrame {
         _clientes = new banco.DatosCliente[iMaxClientes];
         _cuentas = new banco.DatosCuenta[iMaxClientes * iMaxCuentasCliente];
         _movimientos = new banco.DatosMovimientos[iMaxClientes * iMaxCuentasCliente * iMaxMovCuentas];
+
+        // Como un array multidimencional 0,1,2,3,4 (cinco registros) y 0,1,2 (tres columnas [cui,nombre,apellido]) 
+        //aclientes = new String[5][3];
+    }
+    
+    public Menu(Login padre) {
+        initComponents();
+        // Como un vector de array.
+        _clientes = new banco.DatosCliente[iMaxClientes];
+        _cuentas = new banco.DatosCuenta[iMaxClientes * iMaxCuentasCliente];
+        _movimientos = new banco.DatosMovimientos[iMaxClientes * iMaxCuentasCliente * iMaxMovCuentas];
+        _padre = padre;
 
         // Como un array multidimencional 0,1,2,3,4 (cinco registros) y 0,1,2 (tres columnas [cui,nombre,apellido]) 
         //aclientes = new String[5][3];
@@ -65,11 +80,17 @@ public class Menu extends javax.swing.JFrame {
         btnMovimiento = new javax.swing.JButton();
         btnHistorial = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Menu");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -190,6 +211,18 @@ public class Menu extends javax.swing.JFrame {
         creaHistorial.setVisible(true);
     }//GEN-LAST:event_btnHistorialActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this._padre.setEnabled(false);
+        this._padre.setVisible(false);
+    }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        this._padre.setEnabled(true);
+        this._padre.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
+
     public int CantidadCuentasPorCui(String cui) {
         int Cantidad = 0;
         for (int x = 0; x <= (iMaxClientes * iMaxCuentasCliente) - 1; x++) {
@@ -296,6 +329,7 @@ public class Menu extends javax.swing.JFrame {
     private void DatosPrueba() {
         _clientes[0] = new DatosCliente("2553803990101", "Adrian Renato", "Garccia");
         _clientes[1] = new DatosCliente("2553814000101", "Ann", "Jefferson");
+        this.iContadorCliente = 3;
 
         _cuentas[0] = new DatosCuenta("56460101", "Depositos", "2553803990101", 1);
         _cuentas[1] = new DatosCuenta("36180101", "Ahorros", "2553803990101", 2);
@@ -303,6 +337,7 @@ public class Menu extends javax.swing.JFrame {
         _cuentas[3] = new DatosCuenta("39440101", "Ahorros", "2553814000101", 4);
         _cuentas[4] = new DatosCuenta("14500101", "Ahorros", "2553803990101", 5);
         _cuentas[5] = new DatosCuenta("09500101", "Ahorros", "2553803990101", 6);
+        this.iCuentaBancoId = 7;
 
     }
 

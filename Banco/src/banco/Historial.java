@@ -2,39 +2,42 @@ package banco;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author macbookpro
  */
 public class Historial extends javax.swing.JFrame {
 
-    
     private banco.DatosCliente[] _clientes;
     private banco.DatosCuenta[] _cuentas;
     private banco.DatosMovimientos[] _movimientos;
     private banco.Menu _mainFrame;
+
     /**
      * Creates new form Historial
      */
     public Historial() {
         initComponents();
     }
-    
-    public Historial(  banco.Menu mainframe, banco.DatosCliente[] clientes, banco.DatosCuenta[] cuentas, 
+
+    public Historial(banco.Menu mainframe, banco.DatosCliente[] clientes, banco.DatosCuenta[] cuentas,
             banco.DatosMovimientos[] movimientos) {
         initComponents();
-        
+
         _clientes = clientes;
         _cuentas = cuentas;
         _movimientos = movimientos;
         _mainFrame = mainframe;
-        
+        this.setLocationRelativeTo(null);
+
     }
 
     /**
@@ -54,10 +57,10 @@ public class Historial extends javax.swing.JFrame {
         txtCUI = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        txtNombre1 = new javax.swing.JTextField();
+        txtApellido = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        lstHistorial = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Historial de Transacciones");
@@ -92,22 +95,22 @@ public class Historial extends javax.swing.JFrame {
 
         txtNombre.setEditable(false);
 
-        txtNombre1.setEditable(false);
+        txtApellido.setEditable(false);
 
         jLabel4.setText("Apellido");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        lstHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(lstHistorial);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,7 +129,7 @@ public class Historial extends javax.swing.JFrame {
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1009, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
@@ -145,7 +148,7 @@ public class Historial extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel3)
@@ -189,8 +192,84 @@ public class Historial extends javax.swing.JFrame {
 
     private void btnMostrarTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarTransActionPerformed
         // TODO add your handling code here:
+        if (this.txtIdCuenta.getText().length() > 0) {
+            double idcuentabuscar = Double.parseDouble(txtIdCuenta.getText());
+            if (idcuentabuscar > 0) {
+                if(BuscarCuentayCliente(idcuentabuscar)){
+                    LlenaHistorial(idcuentabuscar);
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Ingrese numero de cuenta valido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese numero de cuenta buscar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnMostrarTransActionPerformed
 
+    private void LlenaHistorial(double idcuentabuscar) {
+        DefaultTableModel model = new DefaultTableModel();
+
+        model.addColumn("Correlativo");
+        model.addColumn("Fecha");
+        model.addColumn("Detalle");
+        model.addColumn("Debito");
+        model.addColumn("Credito");
+        model.addColumn("SaldoDisponible");
+
+        for (banco.DatosMovimientos movs : this._movimientos) {
+            if (movs != null) {
+                if (movs.NumeroCuenta == idcuentabuscar) {
+                    model.addRow(new Object[]{movs.Correlativo,
+                        movs.Fecha,
+                        movs.Servicio
+                    });
+                }
+            }
+        }
+
+        lstHistorial.setModel(model);
+    }
+
+    private boolean BuscarCuentayCliente(double idcuentabuscar) {
+
+        boolean encontrado = false;
+
+        //Busca cuenta
+        for (DatosCuenta cuenta : _cuentas) {
+
+            // si cuenta no es nula
+            if (cuenta != null) {
+
+                // compara el Id a buscar
+                if (cuenta.Id == idcuentabuscar) {
+
+                    // recorre clientes para buscar al cliente enlazado a la cuenta
+                    for (DatosCliente cliente : _clientes) {
+
+                        // si el cliente no es nulo
+                        if (cliente != null) {
+
+                            // compara si el CUI es igual, encontro los datos del cliente
+                            if (cliente.CUI.trim().equals(cuenta.CUI.trim())) {
+                                encontrado = true;
+                                this.txtCUI.setText(cliente.CUI);
+                                this.txtNombre.setText(cliente.Nombre);
+                                this.txtApellido.setText(cliente.Apellido);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(this, "Cuenta no encontrada!", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return encontrado;
+    }
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
         this._mainFrame.setEnabled(true);
@@ -205,7 +284,7 @@ public class Historial extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        
+
         txtIdCuenta.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -261,10 +340,10 @@ public class Historial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable lstHistorial;
+    private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCUI;
     private javax.swing.JTextField txtIdCuenta;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre1;
     // End of variables declaration//GEN-END:variables
 }
