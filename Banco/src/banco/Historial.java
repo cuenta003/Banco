@@ -2,6 +2,7 @@ package banco;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -217,13 +218,24 @@ public class Historial extends javax.swing.JFrame {
         model.addColumn("Debito");
         model.addColumn("Credito");
         model.addColumn("SaldoDisponible");
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY hh:mm:ss");
+        
 
         for (banco.DatosMovimientos movs : this._movimientos) {
             if (movs != null) {
                 if (movs.NumeroCuenta == idcuentabuscar) {
+                    String dateString = sdf.format(movs.Fecha);
+                    String detalle = "";
+                    if(movs.Servicio == null){
+                        detalle = movs.Tipo;
+                    }
+                    else{
+                        detalle = movs.Servicio;
+                    }
                     model.addRow(new Object[]{movs.Correlativo,
-                        movs.Fecha,
-                        movs.Servicio
+                        dateString,
+                        detalle
                     });
                 }
             }
