@@ -8,27 +8,7 @@ Apache NetBeans 14
 
 Hay 2 metodos de realizar esta accion.
 
-Opcion 1:
-
-Propiedad tipo arreglo multidimencional.
-
-  private String[][] aclientes; 
-
-La asignacion se puede realizar de la siguiente forma.
-
-  aclientes[0][0] = cui0;
-  aclientes[0][1] = nombre0;
-  aclientes[0][2] = apellido0;
-  
-  aclientes[1][0] = cui1;
-  aclientes[1][1] = nombre1;
-  aclientes[1][2] = apellido1;
-  
-  aclientes[n][0] = cuin;
-  aclientes[n][1] = nombren;
-  aclientes[n][2] = apellidon;
-  
-Opcion 2:
+Forma de almacenar la informacion:
 
 Propiedad tipo arreglo multi dimencional de un tipo de objeto.
 
@@ -46,8 +26,7 @@ La asignacion se puede realizar de la siguiente forma.
  - Crear Cuenta y su vinculacion a un Cliente. (listo)
  - Visualizar Informacion Cliente. (listo)
  - Movimientos.  (listo)
- - Detalle Transacciones. <===== En Proceso
-   *  pendientes formateo fecha, columnas Debito, Credito y Saldo
+ - Detalle Transacciones. (listo)
  
  Validaciones efectuadas:
  
@@ -55,5 +34,11 @@ La asignacion se puede realizar de la siguiente forma.
  - Maximo de Cuentas por Cliente a poder crear.
  - Aceptar numeros en el campo de CUI para ventana Cliente
  - Aceptar numeros en el campo de CUI para ventana Informacion.
+
+ Pendientes
+
+ - Algunas imagenes y mejorar diseno de las interfaces graficas (ventanas)
+ - Deshabilitar los datos de prueba en banco.menu
+
  
  
