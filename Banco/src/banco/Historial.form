@@ -190,6 +190,9 @@
                   <Table columnCount="0" rowCount="4"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="lstHistorialComponentShown"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

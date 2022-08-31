@@ -41,6 +41,11 @@ public class Inicio extends javax.swing.JFrame {
         });
 
         btnInicio1.setText("Acerca de");
+        btnInicio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInicio1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -72,6 +77,13 @@ public class Inicio extends javax.swing.JFrame {
         newlogin.setAlwaysOnTop(true);
         newlogin.setVisible(true);
     }//GEN-LAST:event_btnInicioActionPerformed
+
+    private void btnInicio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicio1ActionPerformed
+        // TODO add your handling code here:
+        banco.AcercaDe newAcercade = new banco.AcercaDe(this);
+        newAcercade.setAlwaysOnTop(true);
+        newAcercade.setVisible(true);
+    }//GEN-LAST:event_btnInicio1ActionPerformed
 
     /**
      * @param args the command line arguments

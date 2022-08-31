@@ -15,7 +15,7 @@ public class DatosMovimientos {
 
     public int Correlativo; //Llave
     public int NumeroCuenta;
-    public String Tipo; //Deposito, Transferencia, Servicio
+    public String Tipo; //Deposito, Transferencia?, Servicio
     public double Monto;
     public String Operacion; //Debito, Credito
     public String Servicio; //Luz, Agua, Telefono

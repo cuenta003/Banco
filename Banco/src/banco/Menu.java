@@ -35,7 +35,7 @@ public class Menu extends javax.swing.JFrame {
 
     //numero maximo cuentas por cliente
     private final int iMaxMovCuentas = 10;
-    
+
     //formulario padre
     Login _padre;
 
@@ -52,7 +52,7 @@ public class Menu extends javax.swing.JFrame {
         // Como un array multidimencional 0,1,2,3,4 (cinco registros) y 0,1,2 (tres columnas [cui,nombre,apellido]) 
         //aclientes = new String[5][3];
     }
-    
+
     public Menu(Login padre) {
         initComponents();
         // Como un vector de array.
@@ -237,8 +237,8 @@ public class Menu extends javax.swing.JFrame {
         }
         return Cantidad;
     }
-    
-    public double SaldoCuenta( int cuenta ){
+
+    public double SaldoCuenta(int cuenta) {
         double dMonto = 0;
         for (int x = 0; x <= (iMaxClientes * iMaxCuentasCliente) - 1; x++) {
             // que el registro no sea nulo
@@ -251,14 +251,14 @@ public class Menu extends javax.swing.JFrame {
         }
         return dMonto;
     }
-    
-    public void CambiaSaldo( double saldo, int cuenta ){
+
+    public void CambiaSaldo(double saldo, int cuenta) {
         for (int x = 0; x <= (iMaxClientes * iMaxCuentasCliente) - 1; x++) {
             // que el registro no sea nulo
             if (_cuentas[x] != null) {
                 //si el cui es igual determina el saldo de la cuenta
                 if (cuenta == _cuentas[x].Id) {
-                     _cuentas[x].Saldo = saldo;
+                    _cuentas[x].Saldo = saldo;
                 }
             }
         }
@@ -338,6 +338,18 @@ public class Menu extends javax.swing.JFrame {
         _cuentas[4] = new DatosCuenta("14500101", "Ahorros", "2553803990101", 5);
         _cuentas[5] = new DatosCuenta("09500101", "Ahorros", "2553803990101", 6);
         this.iCuentaBancoId = 7;
+
+        _movimientos[0] = new DatosMovimientos(this.iContadorMov, 1, "Deposito", 500.45, "Credito", "", "");
+        this.CambiaSaldo(500.45, 1);
+        _movimientos[1] = new DatosMovimientos(this.iContadorMov+=1, 1, "Transferencia", 99.0, "Debito", "", "A cuenta - 44440101 Ann Jefferson");
+        this.CambiaSaldo(500.45 - 99, 1);
+        _movimientos[2] = new DatosMovimientos(this.iContadorMov+=1, 3, "Transferencia", 99.45, "Credito", "", "De cuenta - 56460101 Adrian Renato Garccia");
+        this.CambiaSaldo(99, 3);
+        _movimientos[3] = new DatosMovimientos(this.iContadorMov+=1, 1, "Pago Servicios", 250.85, "Debito", "Servicio telefonico", "");
+        this.CambiaSaldo(150, 1);
+        _movimientos[4] = new DatosMovimientos(this.iContadorMov+=1, 1, "Deposito", 109.55, "Credito", "", "");
+        this.CambiaSaldo(260.15, 1);
+        this.iContadorMov = 1005;
 
     }
 

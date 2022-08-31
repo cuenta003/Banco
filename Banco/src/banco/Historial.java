@@ -2,10 +2,14 @@ package banco;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -111,6 +115,11 @@ public class Historial extends javax.swing.JFrame {
 
             }
         ));
+        lstHistorial.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                lstHistorialComponentShown(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstHistorial);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -196,10 +205,10 @@ public class Historial extends javax.swing.JFrame {
         if (this.txtIdCuenta.getText().length() > 0) {
             double idcuentabuscar = Double.parseDouble(txtIdCuenta.getText());
             if (idcuentabuscar > 0) {
-                if(BuscarCuentayCliente(idcuentabuscar)){
+                if (BuscarCuentayCliente(idcuentabuscar)) {
                     LlenaHistorial(idcuentabuscar);
                 }
-                
+
             } else {
                 JOptionPane.showMessageDialog(this, "Ingrese numero de cuenta valido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
@@ -210,7 +219,16 @@ public class Historial extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMostrarTransActionPerformed
 
     private void LlenaHistorial(double idcuentabuscar) {
-        DefaultTableModel model = new DefaultTableModel();
+        
+        // Deshabilita la edicion de las filas
+        DefaultTableModel model = new DefaultTableModel() {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;
+            }
+        };
 
         model.addColumn("Correlativo");
         model.addColumn("Fecha");
@@ -218,30 +236,65 @@ public class Historial extends javax.swing.JFrame {
         model.addColumn("Debito");
         model.addColumn("Credito");
         model.addColumn("SaldoDisponible");
-        
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY hh:mm:ss");
-        
+        NumberFormat formatter = new DecimalFormat("#,##0.00");
+
+        // para calculo de saldo
+        double saldo = 0;
 
         for (banco.DatosMovimientos movs : this._movimientos) {
             if (movs != null) {
                 if (movs.NumeroCuenta == idcuentabuscar) {
                     String dateString = sdf.format(movs.Fecha);
                     String detalle = "";
-                    if(movs.Servicio == null){
-                        detalle = movs.Tipo;
+                    double credito = 0;
+                    double debito = 0;
+
+                    switch (movs.Tipo) {
+                        case "Deposito":
+                            detalle = "Deposito";
+                            credito = movs.Monto;
+                            break;
+                        case "Transferencia":
+                            detalle = "Transferencia: " + movs.Observaciones.trim().toLowerCase();
+                            if (movs.Operacion == "Debito") {
+                                debito = movs.Monto;
+                            }
+                            if (movs.Operacion == "Credito") {
+                                credito = movs.Monto;
+                            }
+                            break;
+                        case "Pago Servicios":
+                            detalle = "Pago Servicio: " + movs.Servicio.toLowerCase();
+                            debito = movs.Monto;
+                            break;
                     }
-                    else{
-                        detalle = movs.Servicio;
-                    }
+
+                    saldo = (saldo + credito) - debito;
+
                     model.addRow(new Object[]{movs.Correlativo,
                         dateString,
-                        detalle
+                        detalle,
+                        formatter.format(debito),
+                        formatter.format(credito),
+                        formatter.format(saldo)
                     });
                 }
             }
         }
 
+        // Asigna TableModel
         lstHistorial.setModel(model);
+
+        // Alinea columnas a la derecha
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        lstHistorial.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
+        lstHistorial.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+        lstHistorial.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+
     }
 
     private boolean BuscarCuentayCliente(double idcuentabuscar) {
@@ -279,7 +332,7 @@ public class Historial extends javax.swing.JFrame {
         if (!encontrado) {
             JOptionPane.showMessageDialog(this, "Cuenta no encontrada!", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-        
+
         return encontrado;
     }
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -308,6 +361,10 @@ public class Historial extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_formWindowActivated
+
+    private void lstHistorialComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_lstHistorialComponentShown
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lstHistorialComponentShown
 
     /**
      * @param args the command line arguments
@@ -358,4 +415,5 @@ public class Historial extends javax.swing.JFrame {
     private javax.swing.JTextField txtIdCuenta;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+
 }

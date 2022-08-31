@@ -301,9 +301,14 @@ public class Movimiento extends javax.swing.JFrame {
 
                 // Determina saldo cuenta de origen mayor al monto a transferir
                 if (dSaldoO >= dMonto) {
+                    
                     // Graba Historial de Movimiento
-                    boolean segrabo1 = this.mainFrame.AgregarMovimiento(icuentaorigen, stipo, dMonto, "Debito", "", txtaObservaciones.getText());
-                    boolean segrabo2 = this.mainFrame.AgregarMovimiento(icuentadestino, stipo, dMonto, "Credito", "", txtaObservaciones.getText());
+                    // Cuenta que envia o se debita
+                    boolean segrabo1 = this.mainFrame.AgregarMovimiento(icuentaorigen, stipo, dMonto, "Debito", "", 
+                            txtaObservaciones.getText() + "-" + splitDestino[1].trim().toLowerCase() + " " + splitDestino[1].trim().toLowerCase());
+                    // Cuenta que recibe o acredita
+                    boolean segrabo2 = this.mainFrame.AgregarMovimiento(icuentadestino, stipo, dMonto, "Credito", "", 
+                            txtaObservaciones.getText() + "-" + parts[1].trim().toLowerCase() + " " + parts[2].trim().toLowerCase());
 
                     if (segrabo1) {
 
@@ -315,16 +320,16 @@ public class Movimiento extends javax.swing.JFrame {
                         double nuevoSaldoD = dSaldoD + dMonto;
                         this.mainFrame.CambiaSaldo(nuevoSaldoD, icuentadestino);
 
-                        JOptionPane.showMessageDialog(null, "Transferencia realizada exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Transferencia realizada exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
 
                     } else {
-                        JOptionPane.showMessageDialog(null, "Error al grabar transferencia.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Error al grabar transferencia.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "La cuenta de origen no tiene suficientes fondos.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "La cuenta de origen no tiene suficientes fondos.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "El monto de la transferencia deber ser mayor a 0.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "El monto de la transferencia deber ser mayor a 0.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
 
         } else if (cmbOperacionbancaria.getSelectedItem() == "Deposito") {
@@ -341,11 +346,11 @@ public class Movimiento extends javax.swing.JFrame {
                     double nuevoSaldoO = dSaldoO + dMonto;
                     this.mainFrame.CambiaSaldo(nuevoSaldoO, icuentaorigen);
 
-                    JOptionPane.showMessageDialog(null, "Deposito realizado exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Deposito realizado exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "El monto del deposito deber ser mayor a 0.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "El monto del deposito deber ser mayor a 0.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
 
         } else if (cmbOperacionbancaria.getSelectedItem() == "Pago Servicios") {
@@ -357,7 +362,7 @@ public class Movimiento extends javax.swing.JFrame {
                 double dMonto = Double.parseDouble(this.txtMonto.getText());
 
                 if (dSaldoO < dMonto) {
-                    JOptionPane.showMessageDialog(null, "La cuenta de origen no tiene suficientes fondos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "La cuenta de origen no tiene suficientes fondos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 } else {
                     
                     Object oServicio = this.cmbServicios.getSelectedItem();
@@ -370,12 +375,12 @@ public class Movimiento extends javax.swing.JFrame {
                         double nuevoSaldoO = dSaldoO - dMonto;
                         this.mainFrame.CambiaSaldo(nuevoSaldoO, icuentaorigen);
                         
-                        JOptionPane.showMessageDialog(null, "Pago realizado exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Pago realizado exitosamente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "El monto del pago debe ser mayor a 0.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "El monto del pago debe ser mayor a 0.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
 
         }
